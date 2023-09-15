@@ -1,14 +1,12 @@
 package com.safetynetapp.controllers;
 
 import com.safetynetapp.services.FireStationService;
-import com.safetynetapp.models.Person;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.List;
+
 
 @RestController
 public class FireStationController {
@@ -22,18 +20,8 @@ public class FireStationController {
 
   @GetMapping("/firestation")
   public String getFireStationInfo(@RequestParam("stationNumber") int stationNumber) {
-    List<Person> fireStationInfo = fireStationService.getPeopleServicedByFireStation(stationNumber);
-
-    return convertPersonListToString(fireStationInfo);
+    String fireStationInfo = fireStationService.getFireStationInfo(stationNumber);
+    return fireStationInfo;
   }
 
-  public String convertPersonListToString(List<Person> personList) {
-    try {
-      ObjectMapper objectMapper = new ObjectMapper();
-      return objectMapper.writeValueAsString(personList);
-    } catch (Exception e) {
-      e.printStackTrace();
-      return null; // Handle exception appropriately
-    }
-  }
 }

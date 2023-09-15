@@ -1,5 +1,7 @@
 package com.safetynetapp.services;
 
+import com.safetynetapp.models.Person;
+import com.safetynetapp.models.MedicalRecord;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.safetynetapp.models.Person;
@@ -13,12 +15,58 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.text.ParseException;
 
 @Service
 public class FireStationService {
 
   @Autowired
   private ResourceLoader resourceLoader;
+
+  public String getFireStationInfo(int stationNumber) {
+    List<Person> listPeopleServiced = getPeopleServicedByFireStation(stationNumber);
+    String stringPeopleServiced = convertPersonListToString(listPeopleServiced);
+    String numberChildrenAndAdultsServiced = getNumberChildrenAndAdultsServived(listPeopleServiced);
+    return stringPeopleServiced + numberChildrenAndAdultsServiced;
+  }
+
+  public String getNumberChildrenAndAdultsServived(List<Person> listPeopleServiced) {
+    int numAdults = 0;
+    int numChildren = 0;
+
+    List<Person> listPeopleServicedWithAge = calculateAgeForPeopleServiced(listPeopleServiced);
+
+    for (Person person : listPeopleServicedWithAge) {
+      if (person.getAge() <= 18) {
+        numChildren++;
+      } else {
+        numAdults++;
+      }
+    }
+
+    String summary = "Summary: " + numAdults + " adults, " + numChildren + " children.\n";
+    return summary;
+  }
+
+  List<Person> calculateAgeForPeopleServiced(List<Person> listPeopleServiced) {
+    List<MedicalRecord> medicalRecords = loadAllMedicalRecordsFromJson();
+    List<Person> updatedPersons = new ArrayList<>();
+    for (Person person : listPeopleServiced) {
+      for (MedicalRecord record : medicalRecords) {
+        if (person.getFirstName().equals(record.getFirstName()) && person.getLastName()
+            .equals(record.getLastName())) {
+          int age = calculateAge(record.getBirthdate());
+          person.setAge(age);
+          updatedPersons.add(person);
+          break;
+        }
+      }
+    }
+    return updatedPersons;
+  }
 
   public List<Person> getPeopleServicedByFireStation(int stationNumber) {
     List<Person> allPeople = loadAllPeopleFromJson();
@@ -53,6 +101,17 @@ public class FireStationService {
     return addresses;
   }
 
+  // Helper method
+  public String convertPersonListToString(List<Person> personList) {
+    try {
+      ObjectMapper objectMapper = new ObjectMapper();
+      return objectMapper.writeValueAsString(personList);
+    } catch (Exception e) {
+      e.printStackTrace();
+      return null; // Handle exception appropriately
+    }
+  }
+
   private List<Person> loadAllPeopleFromJson() {
     try {
       InputStream inputStream = resourceLoader.getResource("classpath:data.json").getInputStream();
@@ -63,9 +122,32 @@ public class FireStationService {
       JsonNode personsNode = rootNode.get("persons");
 
       // Convert the personsNode to a List<Person>
-      List<Person> personList = objectMapper.convertValue(personsNode, new TypeReference<List<Person>>() {});
+      List<Person> personList = objectMapper.convertValue(personsNode,
+          new TypeReference<List<Person>>() {
+          });
 
       return personList;
+    } catch (IOException e) {
+      e.printStackTrace();
+      return null; // TODO: Handle exception
+    }
+  }
+
+  private List<MedicalRecord> loadAllMedicalRecordsFromJson() {
+    try {
+      InputStream inputStream = resourceLoader.getResource("classpath:data.json").getInputStream();
+      ObjectMapper objectMapper = new ObjectMapper();
+
+      // Read the JSON data and get the list of medical records
+      JsonNode rootNode = objectMapper.readTree(inputStream);
+      JsonNode personsNode = rootNode.get("medicalrecords");
+
+      // Convert the personsNode to a List<MedicalRecord>
+      List<MedicalRecord> medicalRecordList = objectMapper.convertValue(personsNode,
+          new TypeReference<List<MedicalRecord>>() {
+          });
+
+      return medicalRecordList;
     } catch (IOException e) {
       e.printStackTrace();
       return null; // TODO: Handle exception
@@ -82,12 +164,31 @@ public class FireStationService {
       JsonNode fireStationsNode = rootNode.get("firestations");
 
       // Convert the fireStationsNode to a List<FireStation>
-      List<FireStation> fireStationList = objectMapper.convertValue(fireStationsNode, new TypeReference<List<FireStation>>() {});
+      List<FireStation> fireStationList = objectMapper.convertValue(fireStationsNode,
+          new TypeReference<List<FireStation>>() {
+          });
 
       return fireStationList;
     } catch (IOException e) {
       e.printStackTrace();
       return null; // TODO: Handle exception
+    }
+  }
+
+  public static int calculateAge(String birthdate) {
+    SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+    Date today = new Date();
+    try {
+      Date dob = format.parse(birthdate);
+      int age = today.getYear() - dob.getYear();
+      if (today.getMonth() < dob.getMonth() || (today.getMonth() == dob.getMonth()
+          && today.getDate() < dob.getDate())) {
+        age--;
+      }
+      return age;
+    } catch (ParseException e) {
+      e.printStackTrace();
+      return -1; // Handle error
     }
   }
 }
