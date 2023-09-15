@@ -1,6 +1,7 @@
 package com.safetynetapp.services;
 
 import com.safetynetapp.models.Person;
+import com.safetynetapp.models.PersonInfo;
 import com.safetynetapp.models.MedicalRecord;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -108,8 +109,14 @@ public class FireStationService {
   // Helper method
   public String convertPersonListToString(List<Person> personList) {
     try {
+      List<PersonInfo> personInfoList = new ArrayList<>();
+      for (Person person : personList) {
+        PersonInfo personInfo = new PersonInfo(person.getFirstName(), person.getLastName(), person.getAddress(), person.getPhone());
+        personInfoList.add(personInfo);
+      }
+
       ObjectMapper objectMapper = new ObjectMapper();
-      return objectMapper.writeValueAsString(personList);
+      return objectMapper.writeValueAsString(personInfoList);
     } catch (Exception e) {
       e.printStackTrace();
       return null; // Handle exception appropriately
