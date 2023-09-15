@@ -5,6 +5,7 @@ import com.safetynetapp.models.MedicalRecord;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.safetynetapp.models.Person;
+import com.safetynetapp.models.PersonWithAge;
 import com.safetynetapp.models.FireStation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
@@ -33,13 +34,16 @@ public class FireStationService {
     return stringPeopleServiced + numberChildrenAndAdultsServiced;
   }
 
+
   public String getNumberChildrenAndAdultsServived(List<Person> listPeopleServiced) {
     int numAdults = 0;
     int numChildren = 0;
 
-    List<Person> listPeopleServicedWithAge = calculateAgeForPeopleServiced(listPeopleServiced);
+    List<MedicalRecord> medicalRecords = loadAllMedicalRecordsFromJson();
+    List<PersonWithAge> listPeopleServicedWithAge = addAgeToPersons(listPeopleServiced,
+        medicalRecords);
 
-    for (Person person : listPeopleServicedWithAge) {
+    for (PersonWithAge person : listPeopleServicedWithAge) {
       if (person.getAge() <= 18) {
         numChildren++;
       } else {
@@ -51,21 +55,21 @@ public class FireStationService {
     return summary;
   }
 
-  List<Person> calculateAgeForPeopleServiced(List<Person> listPeopleServiced) {
-    List<MedicalRecord> medicalRecords = loadAllMedicalRecordsFromJson();
-    List<Person> updatedPersons = new ArrayList<>();
-    for (Person person : listPeopleServiced) {
+  public static List<PersonWithAge> addAgeToPersons(List<Person> persons,
+      List<MedicalRecord> medicalRecords) {
+    List<PersonWithAge> personsWithAge = new ArrayList<>();
+    for (Person person : persons) {
       for (MedicalRecord record : medicalRecords) {
         if (person.getFirstName().equals(record.getFirstName()) && person.getLastName()
             .equals(record.getLastName())) {
           int age = calculateAge(record.getBirthdate());
-          person.setAge(age);
-          updatedPersons.add(person);
+          personsWithAge.add(new PersonWithAge(person, age));
           break;
         }
       }
     }
-    return updatedPersons;
+
+    return personsWithAge;
   }
 
   public List<Person> getPeopleServicedByFireStation(int stationNumber) {
@@ -140,10 +144,10 @@ public class FireStationService {
 
       // Read the JSON data and get the list of medical records
       JsonNode rootNode = objectMapper.readTree(inputStream);
-      JsonNode personsNode = rootNode.get("medicalrecords");
+      JsonNode medicalRecordsNode = rootNode.get("medicalrecords");
 
       // Convert the personsNode to a List<MedicalRecord>
-      List<MedicalRecord> medicalRecordList = objectMapper.convertValue(personsNode,
+      List<MedicalRecord> medicalRecordList = objectMapper.convertValue(medicalRecordsNode,
           new TypeReference<List<MedicalRecord>>() {
           });
 
