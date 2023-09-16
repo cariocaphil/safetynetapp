@@ -3,6 +3,7 @@ package com.safetynetapp.services;
 import com.safetynetapp.models.Person;
 import com.safetynetapp.models.PersonInfo;
 import com.safetynetapp.models.MedicalRecord;
+import com.safetynetapp.models.FireStationInfoResponse;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.safetynetapp.models.Person;
@@ -28,13 +29,19 @@ public class FireStationService {
   @Autowired
   private ResourceLoader resourceLoader;
 
-  public String getFireStationInfo(int stationNumber) {
+  public FireStationInfoResponse getFireStationInfo(int stationNumber) {
     List<Person> listPeopleServiced = getPeopleServicedByFireStation(stationNumber);
-    String stringPeopleServiced = convertPersonListToString(listPeopleServiced);
-    String numberChildrenAndAdultsServiced = getNumberChildrenAndAdultsServived(listPeopleServiced);
-    return stringPeopleServiced + numberChildrenAndAdultsServiced;
-  }
 
+    if (listPeopleServiced.isEmpty()) {
+      return null;
+    }
+
+    FireStationInfoResponse response = new FireStationInfoResponse();
+    response.setPeopleServiced(listPeopleServiced);
+    response.setNumberChildrenAndAdultsServiced(getNumberChildrenAndAdultsServived(listPeopleServiced));
+
+    return response;
+  }
 
   public String getNumberChildrenAndAdultsServived(List<Person> listPeopleServiced) {
     int numAdults = 0;

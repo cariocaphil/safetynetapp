@@ -1,11 +1,14 @@
 package com.safetynetapp.controllers;
 
+import com.safetynetapp.models.FireStationInfoResponse;
+
 import com.safetynetapp.services.FireStationService;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 
 
 @RestController
@@ -19,9 +22,15 @@ public class FireStationController {
   }
 
   @GetMapping("/firestation")
-  public String getFireStationInfo(@RequestParam("stationNumber") int stationNumber) {
-    String fireStationInfo = fireStationService.getFireStationInfo(stationNumber);
-    return fireStationInfo;
+  public ResponseEntity<Object> getFireStationInfo(
+      @RequestParam("stationNumber") int stationNumber) {
+    FireStationInfoResponse response = fireStationService.getFireStationInfo(stationNumber);
+
+    if (response == null) {
+      return ResponseEntity.ok().body("{}");
+    }
+
+    return ResponseEntity.ok().body(response);
   }
 
 }
