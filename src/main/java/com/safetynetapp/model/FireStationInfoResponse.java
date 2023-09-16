@@ -1,18 +1,18 @@
 package com.safetynetapp.models;
-import com.safetynetapp.models.Person;
+import com.safetynetapp.models.PersonInfo;
 
 import java.util.List;
 
 
 public class FireStationInfoResponse {
-  private List<Person> peopleServiced;
+  private List<PersonInfo> peopleServiced;
   private String numberChildrenAndAdultsServiced;
 
-  public List<Person> getPeopleServiced() {
+  public List<PersonInfo> getPeopleServiced() {
     return peopleServiced;
   }
 
-  public void setPeopleServiced(List<Person> peopleServiced) {
+  public void setPeopleServiced(List<PersonInfo> peopleServiced) {
     this.peopleServiced = peopleServiced;
   }
 

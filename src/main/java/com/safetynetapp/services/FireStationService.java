@@ -35,12 +35,24 @@ public class FireStationService {
     if (listPeopleServiced.isEmpty()) {
       return null;
     }
-
+    List<PersonInfo> customizedListPeopleServiced = customizeListPeopleServiced(listPeopleServiced);
     FireStationInfoResponse response = new FireStationInfoResponse();
-    response.setPeopleServiced(listPeopleServiced);
-    response.setNumberChildrenAndAdultsServiced(getNumberChildrenAndAdultsServived(listPeopleServiced));
+
+    response.setPeopleServiced(customizedListPeopleServiced);
+    response.setNumberChildrenAndAdultsServiced(
+        getNumberChildrenAndAdultsServived(listPeopleServiced));
 
     return response;
+  }
+
+  public List<PersonInfo> customizeListPeopleServiced(List<Person> listPeopleServiced) {
+    List<PersonInfo> personInfoList = new ArrayList<>();
+    for (Person person : listPeopleServiced) {
+      PersonInfo personInfo = new PersonInfo(person.getFirstName(), person.getLastName(),
+          person.getAddress(), person.getPhone());
+      personInfoList.add(personInfo);
+    }
+    return personInfoList;
   }
 
   public String getNumberChildrenAndAdultsServived(List<Person> listPeopleServiced) {
@@ -86,13 +98,7 @@ public class FireStationService {
 
     for (Person person : allPeople) {
       if (getAddressesForStation(stationNumber).contains(person.getAddress())) {
-        Person filteredPerson = new Person();
-        filteredPerson.setFirstName(person.getFirstName());
-        filteredPerson.setLastName(person.getLastName());
-        filteredPerson.setAddress(person.getAddress());
-        filteredPerson.setPhone(person.getPhone());
-
-        peopleServicedByStation.add(filteredPerson);
+        peopleServicedByStation.add(person);
       }
     }
 
@@ -111,23 +117,6 @@ public class FireStationService {
     }
 
     return addresses;
-  }
-
-  // Helper method
-  public String convertPersonListToString(List<Person> personList) {
-    try {
-      List<PersonInfo> personInfoList = new ArrayList<>();
-      for (Person person : personList) {
-        PersonInfo personInfo = new PersonInfo(person.getFirstName(), person.getLastName(), person.getAddress(), person.getPhone());
-        personInfoList.add(personInfo);
-      }
-
-      ObjectMapper objectMapper = new ObjectMapper();
-      return objectMapper.writeValueAsString(personInfoList);
-    } catch (Exception e) {
-      e.printStackTrace();
-      return null; // Handle exception appropriately
-    }
   }
 
   private List<Person> loadAllPeopleFromJson() {
