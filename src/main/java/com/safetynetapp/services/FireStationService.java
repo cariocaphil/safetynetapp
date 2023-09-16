@@ -4,6 +4,7 @@ import com.safetynetapp.models.Person;
 import com.safetynetapp.models.PersonInfo;
 import com.safetynetapp.models.MedicalRecord;
 import com.safetynetapp.models.FireStationInfoResponse;
+import com.safetynetapp.models.SummaryChildrenAndAdultsServiced;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.safetynetapp.models.Person;
@@ -39,7 +40,7 @@ public class FireStationService {
     FireStationInfoResponse response = new FireStationInfoResponse();
 
     response.setPeopleServiced(customizedListPeopleServiced);
-    response.setNumberChildrenAndAdultsServiced(
+    response.setSummaryChildrenAndAdultsServiced(
         getNumberChildrenAndAdultsServived(listPeopleServiced));
 
     return response;
@@ -55,7 +56,7 @@ public class FireStationService {
     return personInfoList;
   }
 
-  public String getNumberChildrenAndAdultsServived(List<Person> listPeopleServiced) {
+  public SummaryChildrenAndAdultsServiced getNumberChildrenAndAdultsServived(List<Person> listPeopleServiced) {
     int numAdults = 0;
     int numChildren = 0;
 
@@ -71,7 +72,10 @@ public class FireStationService {
       }
     }
 
-    String summary = "Summary: " + numAdults + " adults, " + numChildren + " children.\n";
+    SummaryChildrenAndAdultsServiced summary = new SummaryChildrenAndAdultsServiced();
+    summary.setChildren(numChildren);
+    summary.setAdults(numAdults);
+
     return summary;
   }
 

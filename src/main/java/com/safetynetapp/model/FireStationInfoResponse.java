@@ -1,12 +1,11 @@
 package com.safetynetapp.models;
-import com.safetynetapp.models.PersonInfo;
 
 import java.util.List;
 
-
 public class FireStationInfoResponse {
+
   private List<PersonInfo> peopleServiced;
-  private String numberChildrenAndAdultsServiced;
+  private SummaryChildrenAndAdultsServiced summaryChildrenAndAdultsServiced;
 
   public List<PersonInfo> getPeopleServiced() {
     return peopleServiced;
@@ -16,11 +15,12 @@ public class FireStationInfoResponse {
     this.peopleServiced = peopleServiced;
   }
 
-  public String getNumberChildrenAndAdultsServiced() {
-    return numberChildrenAndAdultsServiced;
+  public SummaryChildrenAndAdultsServiced getSummaryChildrenAndAdultsServiced() {
+    return summaryChildrenAndAdultsServiced;
   }
 
-  public void setNumberChildrenAndAdultsServiced(String numberChildrenAndAdultsServiced) {
-    this.numberChildrenAndAdultsServiced = numberChildrenAndAdultsServiced;
+  public void setSummaryChildrenAndAdultsServiced(
+      SummaryChildrenAndAdultsServiced summaryChildrenAndAdultsServiced) {
+    this.summaryChildrenAndAdultsServiced = summaryChildrenAndAdultsServiced;
   }
 }
