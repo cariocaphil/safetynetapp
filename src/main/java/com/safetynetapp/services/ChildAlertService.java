@@ -4,10 +4,13 @@ import com.safetynetapp.models.ChildInfoResponse;
 import com.safetynetapp.models.Person;
 import com.safetynetapp.models.PersonWithAge;
 import com.safetynetapp.models.MedicalRecord;
+import com.safetynetapp.models.SimpleChildInfo;
+
 import com.safetynetapp.utilities.DataLoader;
 import com.safetynetapp.utilities.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.safetynetapp.models.SimpleChildInfo;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -47,10 +50,28 @@ public class ChildAlertService {
       }
     }
     if (!children.isEmpty() || !otherPersons.isEmpty()) {
-      return new ChildInfoResponse(children, otherPersons);
+      List<SimpleChildInfo> simpleChildInfoList = getSimpleChildInfoList(children);
+
+      return new ChildInfoResponse(simpleChildInfoList, otherPersons);
     }
 
     return null;
   }
+
+  public List<SimpleChildInfo> getSimpleChildInfoList(List<PersonWithAge> children) {
+    List<SimpleChildInfo> simpleChildInfoList = new ArrayList<>();
+
+    for (PersonWithAge child : children) {
+      SimpleChildInfo simpleChildInfo = new SimpleChildInfo();
+      simpleChildInfo.setFirstName(child.getFirstName());
+      simpleChildInfo.setLastName(child.getLastName());
+      simpleChildInfo.setAge(child.getAge());
+
+      simpleChildInfoList.add(simpleChildInfo);
+    }
+
+    return simpleChildInfoList;
+  }
+
 
 }

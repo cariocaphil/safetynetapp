@@ -3,19 +3,19 @@ package com.safetynetapp.models;
 import java.util.List;
 
 public class ChildInfoResponse {
-  private List<PersonWithAge> children;
+  private List<SimpleChildInfo> children;
   private List<Person> otherPersons;
 
-  public ChildInfoResponse(List<PersonWithAge> children, List<Person> otherPersons) {
+  public ChildInfoResponse(List<SimpleChildInfo> children, List<Person> otherPersons) {
     this.children = children;
     this.otherPersons = otherPersons;
   }
 
-  public List<PersonWithAge> getChildren() {
+  public List<SimpleChildInfo> getChildren() {
     return children;
   }
 
-  public void setChildren(List<PersonWithAge> children) {
+  public void setChildren(List<SimpleChildInfo> children) {
     this.children = children;
   }
 
