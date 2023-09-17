@@ -32,5 +32,4 @@ public class FireStationController {
 
     return ResponseEntity.ok().body(response);
   }
-
 }
