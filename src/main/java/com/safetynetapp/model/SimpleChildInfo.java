@@ -30,6 +30,4 @@ public class SimpleChildInfo {
     this.age = age;
   }
 
-  // Getters and setters for firstName, lastName, and age
-  // ...
 }
