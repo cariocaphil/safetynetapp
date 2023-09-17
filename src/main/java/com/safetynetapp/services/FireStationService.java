@@ -9,6 +9,7 @@ import com.safetynetapp.models.Person;
 import com.safetynetapp.models.PersonWithAge;
 import com.safetynetapp.models.FireStation;
 import com.safetynetapp.utilities.DataLoader;
+import com.safetynetapp.utilities.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.io.IOException;
@@ -87,7 +88,7 @@ public class FireStationService {
       for (MedicalRecord record : medicalRecords) {
         if (person.getFirstName().equals(record.getFirstName()) && person.getLastName()
             .equals(record.getLastName())) {
-          int age = calculateAge(record.getBirthdate());
+          int age = DateUtils.calculateAge(record.getBirthdate());
           personsWithAge.add(new PersonWithAge(person, age));
           break;
         }
@@ -124,20 +125,4 @@ public class FireStationService {
     return addresses;
   }
 
-  public static int calculateAge(String birthdate) {
-    SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
-    Date today = new Date();
-    try {
-      Date dob = format.parse(birthdate);
-      int age = today.getYear() - dob.getYear();
-      if (today.getMonth() < dob.getMonth() || (today.getMonth() == dob.getMonth()
-          && today.getDate() < dob.getDate())) {
-        age--;
-      }
-      return age;
-    } catch (ParseException e) {
-      e.printStackTrace();
-      return -1; // Handle error
-    }
-  }
 }

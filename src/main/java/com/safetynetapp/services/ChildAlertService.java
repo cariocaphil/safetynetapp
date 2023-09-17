@@ -5,6 +5,7 @@ import com.safetynetapp.models.Person;
 import com.safetynetapp.models.PersonWithAge;
 import com.safetynetapp.models.MedicalRecord;
 import com.safetynetapp.utilities.DataLoader;
+import com.safetynetapp.utilities.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +36,7 @@ public class ChildAlertService {
       for (MedicalRecord record : medicalRecords) {
         if (person.getFirstName().equals(record.getFirstName()) && person.getLastName()
             .equals(record.getLastName())) {
-          int age = calculateAge(record.getBirthdate());
+          int age = DateUtils.calculateAge(record.getBirthdate());
 
           if (age < 18) {
             children.add(new PersonWithAge(person, age));
@@ -52,20 +53,4 @@ public class ChildAlertService {
     return null;
   }
 
-  public static int calculateAge(String birthdate) {
-    SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
-    Date today = new Date();
-    try {
-      Date dob = format.parse(birthdate);
-      int age = today.getYear() - dob.getYear();
-      if (today.getMonth() < dob.getMonth() || (today.getMonth() == dob.getMonth()
-          && today.getDate() < dob.getDate())) {
-        age--;
-      }
-      return age;
-    } catch (ParseException e) {
-      e.printStackTrace();
-      return -1; // Handle error
-    }
-  }
 }
