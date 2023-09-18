@@ -16,7 +16,7 @@ public class FireStationController {
 
   private final FireStationService fireStationService;
 
-  @Autowired // injects the service instance into the controller
+  @Autowired
   public FireStationController(FireStationService fireStationService) {
     this.fireStationService = fireStationService;
   }
