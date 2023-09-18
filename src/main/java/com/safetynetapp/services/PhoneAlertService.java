@@ -10,6 +10,7 @@ import com.safetynetapp.models.PersonWithAge;
 import com.safetynetapp.models.FireStation;
 import com.safetynetapp.utilities.DataLoader;
 import com.safetynetapp.utilities.DateUtils;
+import com.safetynetapp.utilities.DataUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.io.IOException;
@@ -28,12 +29,24 @@ public class PhoneAlertService {
   @Autowired
   private DataLoader dataLoader;
 
+  @Autowired
+  private DataUtils dataUtils;
+
   public PhoneAlertService(DataLoader dataLoader) {
     this.dataLoader = dataLoader;
   }
 
+  public PhoneAlertService(DataLoader dataLoader, DataUtils dataUtils) {
+    this.dataLoader = dataLoader;
+    this.dataUtils = dataUtils;
+
+  }
+
+  public PhoneAlertService() {
+  }
+
   public PhoneAlertInfoResponse getPhoneAlertInfo(int stationNumber) {
-    List<Person> listPeopleServiced = getPeopleServicedByFireStation(stationNumber);
+    List<Person> listPeopleServiced = dataUtils.getPeopleServicedByFireStation(stationNumber);
 
     if (listPeopleServiced.isEmpty()) {
       return null;
@@ -48,34 +61,6 @@ public class PhoneAlertService {
     response.setPhoneNumbers(listPhoneNumbersPeopleServiced);
 
     return response;
-  }
-
-  public List<Person> getPeopleServicedByFireStation(int stationNumber) {
-    List<Person> allPeople = dataLoader.loadAllDataFromJson("persons", Person.class);
-    List<Person> peopleServicedByStation = new ArrayList<>();
-
-    for (Person person : allPeople) {
-      if (getAddressesForStation(stationNumber).contains(person.getAddress())) {
-        peopleServicedByStation.add(person);
-      }
-    }
-
-    return peopleServicedByStation;
-  }
-
-  // Helper method
-  private List<String> getAddressesForStation(int stationNumber) {
-    List<FireStation> fireStations = dataLoader.loadAllDataFromJson("firestations",
-        FireStation.class);
-    List<String> addresses = new ArrayList<>();
-
-    for (FireStation fireStation : fireStations) {
-      if (fireStation.getStation().equals(String.valueOf(stationNumber))) {
-        addresses.add(fireStation.getAddress());
-      }
-    }
-
-    return addresses;
   }
 
 }
