@@ -16,7 +16,7 @@ public class PhoneAlertController {
 
   private final PhoneAlertService phoneAlertService;
 
-  @Autowired // injects the service instance into the controller
+  @Autowired
   public PhoneAlertController(PhoneAlertService phoneAlertService) {
     this.phoneAlertService = phoneAlertService;
   }

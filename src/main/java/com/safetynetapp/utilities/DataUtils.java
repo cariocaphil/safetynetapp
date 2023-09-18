@@ -32,7 +32,6 @@ public class DataUtils {
     return peopleServicedByStation;
   }
 
-  // Helper method
   private List<String> getAddressesForStation(int stationNumber) {
     List<FireStation> fireStations = dataLoader.loadAllDataFromJson("firestations", FireStation.class);
     List<String> addresses = new ArrayList<>();
