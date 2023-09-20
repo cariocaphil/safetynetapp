@@ -15,7 +15,7 @@ public class DataUtils {
     this.dataLoader = dataLoader;
   }
 
-  public List<Person> getPeopleServicedByFireStation(int stationNumber) {
+  public List<Person> getPeopleServicedByFireStation(String stationNumber) {
     List<Person> allPeople = dataLoader.loadAllDataFromJson("persons", Person.class);
     List<Person> peopleServicedByStation = new ArrayList<>();
 
@@ -28,7 +28,7 @@ public class DataUtils {
     return peopleServicedByStation;
   }
 
-  private List<String> getAddressesForStation(int stationNumber) {
+  private List<String> getAddressesForStation(String stationNumber) {
     List<FireStation> fireStations = dataLoader.loadAllDataFromJson("firestations", FireStation.class);
     List<String> addresses = new ArrayList<>();
 
