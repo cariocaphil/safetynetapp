@@ -1,7 +1,7 @@
 package com.safetynetapp.utilities;
 
-import com.safetynetapp.models.Person;
-import com.safetynetapp.models.FireStation;
+import com.safetynetapp.model.Person;
+import com.safetynetapp.model.FireStation;
 import com.safetynetapp.utilities.DataLoader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -43,5 +43,19 @@ public class DataUtils {
     }
 
     return addresses;
+  }
+
+  public Integer getStationForAddress(String address) {
+    List<FireStation> fireStations = dataLoader.loadAllDataFromJson("firestations", FireStation.class);
+    Integer stationNumber = null;
+
+    for (FireStation fireStation : fireStations) {
+      if (fireStation.getAddress().equals(address)) {
+        stationNumber = Integer.valueOf(fireStation.getStation());
+        break; // Once we find the station, we can stop the loop.
+      }
+    }
+
+    return stationNumber;
   }
 }
