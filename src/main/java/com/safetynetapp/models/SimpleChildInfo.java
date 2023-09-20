@@ -1,5 +1,4 @@
 package com.safetynetapp.models;
-import com.safetynetapp.models.SimpleChildInfo;
 
 public class SimpleChildInfo {
   private String firstName;

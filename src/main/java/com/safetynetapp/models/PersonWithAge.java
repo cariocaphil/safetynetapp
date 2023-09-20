@@ -1,5 +1,4 @@
 package com.safetynetapp.models;
-import com.safetynetapp.models.Person;
 
 public class PersonWithAge extends Person {
 
