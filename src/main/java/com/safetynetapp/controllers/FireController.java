@@ -1,6 +1,6 @@
 package com.safetynetapp.controllers;
 
-import com.safetynetapp.model.FireInfoResponse;
+import com.safetynetapp.models.FireStationInfoResponse.FireInfoResponse;
 import com.safetynetapp.services.FireService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

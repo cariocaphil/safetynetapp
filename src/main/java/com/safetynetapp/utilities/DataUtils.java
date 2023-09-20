@@ -1,7 +1,7 @@
 package com.safetynetapp.utilities;
 
-import com.safetynetapp.model.Person;
-import com.safetynetapp.model.FireStation;
+import com.safetynetapp.models.Person;
+import com.safetynetapp.models.FireStation;
 import com.safetynetapp.utilities.DataLoader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
