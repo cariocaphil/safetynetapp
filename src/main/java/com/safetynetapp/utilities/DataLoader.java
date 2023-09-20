@@ -1,12 +1,7 @@
 package com.safetynetapp.utilities;
 
-import com.safetynetapp.models.Person;
-import com.safetynetapp.models.MedicalRecord;
-import com.safetynetapp.models.FireStation;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.core.type.TypeReference;
 import org.springframework.core.io.ResourceLoader;
 import java.util.ArrayList;
 import java.io.IOException;

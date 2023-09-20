@@ -1,7 +1,6 @@
 package com.safetynetapp.controllers;
 
 import com.safetynetapp.models.ChildInfoResponse;
-import com.safetynetapp.models.SimpleChildInfo;
 import com.safetynetapp.services.ChildAlertService;
 
 import org.springframework.web.bind.annotation.GetMapping;

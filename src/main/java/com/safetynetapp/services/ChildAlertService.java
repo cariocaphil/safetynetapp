@@ -10,14 +10,9 @@ import com.safetynetapp.utilities.DataLoader;
 import com.safetynetapp.utilities.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.safetynetapp.models.SimpleChildInfo;
 
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
-import java.text.SimpleDateFormat;
-import java.text.ParseException;
 
 
 @Service
