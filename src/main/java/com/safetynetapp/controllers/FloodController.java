@@ -19,9 +19,8 @@ public class FloodController {
   }
 
   @GetMapping("/flood/stations")
-  public ResponseEntity<Object> getFloodInfo(
-      @RequestParam("stations") String stationNumbers) {
-    FloodInfoResponse response = floodService.getFloodInfo(address);
+  public ResponseEntity<Object> getFloodInfo(@RequestParam("stations") String stationNumbers) {
+    FloodInfoResponse response = floodService.getFloodInfo(stationNumbers);
 
     if (response == null) {
       return ResponseEntity.ok().body("{}");
