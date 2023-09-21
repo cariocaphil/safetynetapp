@@ -5,15 +5,15 @@ import java.util.Map;
 
 public class FloodInfoResponse {
 
-  private Map<String, List<PersonWithAgeAndMedicalDetails>> listHouseHoldsAtStation;
+  private Map<String, List<PersonWithAgeAndMedicalDetails>> listHouseholdsAtStation;
 
-  public Map<String, List<PersonWithAgeAndMedicalDetails>> getListHouseHoldsAtStation() {
-    return listHouseHoldsAtStation;
+  public Map<String, List<PersonWithAgeAndMedicalDetails>> getListHouseholdsAtStation() {
+    return listHouseholdsAtStation;
   }
 
-  public void setListHouseHoldsAtStation(
-      Map<String, List<PersonWithAgeAndMedicalDetails>> listHouseHoldsAtStation) {
-    this.listHouseHoldsAtStation = listHouseHoldsAtStation;
+  public void setListHouseholdsAtStation(
+      Map<String, List<PersonWithAgeAndMedicalDetails>> listHouseholdsAtStation) {
+    this.listHouseholdsAtStation = listHouseholdsAtStation;
   }
 
 }

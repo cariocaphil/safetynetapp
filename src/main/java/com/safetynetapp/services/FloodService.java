@@ -51,7 +51,7 @@ public class FloodService {
     }
 
     FloodInfoResponse response = new FloodInfoResponse();
-    response.setListHouseHoldsAtStation(groupedByAddress);
+    response.setListHouseholdsAtStation(groupedByAddress);
 
     return response;
   }
