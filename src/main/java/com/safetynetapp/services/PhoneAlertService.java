@@ -31,7 +31,7 @@ public class PhoneAlertService {
   public PhoneAlertService() {
   }
 
-  public PhoneAlertInfoResponse getPhoneAlertInfo(int stationNumber) {
+  public PhoneAlertInfoResponse getPhoneAlertInfo(String stationNumber) {
     List<Person> listPeopleServiced = dataUtils.getPeopleServicedByFireStation(stationNumber);
 
     if (listPeopleServiced.isEmpty()) {

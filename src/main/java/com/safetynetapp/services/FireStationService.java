@@ -35,7 +35,7 @@ public class FireStationService {
   public FireStationService() {
   }
 
-  public FireStationInfoResponse getFireStationInfo(int stationNumber) {
+  public FireStationInfoResponse getFireStationInfo(String stationNumber) {
     List<Person> listPeopleServiced = dataUtils.getPeopleServicedByFireStation(stationNumber);
 
     if (listPeopleServiced.isEmpty()) {

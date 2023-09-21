@@ -23,7 +23,7 @@ public class FireStationController {
 
   @GetMapping("/firestation")
   public ResponseEntity<Object> getFireStationInfo(
-      @RequestParam("stationNumber") int stationNumber) {
+      @RequestParam("stationNumber") String stationNumber) {
     FireStationInfoResponse response = fireStationService.getFireStationInfo(stationNumber);
 
     if (response == null) {
