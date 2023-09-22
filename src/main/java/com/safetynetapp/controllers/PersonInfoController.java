@@ -1,6 +1,6 @@
 package com.safetynetapp.controllers;
 
-import com.safetynetapp.models.PersonInfo;
+import com.safetynetapp.models.PersonDetails;
 import com.safetynetapp.models.PersonWithAgeAndMedicalDetails;
 import com.safetynetapp.services.PersonInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +22,11 @@ public class PersonInfoController {
   }
 
   @GetMapping("/personInfo")
-  public ResponseEntity<List<PersonWithAgeAndMedicalDetails>> getPersonInfo(
+  public ResponseEntity<List<PersonDetails>> getPersonInfo(
       @RequestParam("firstName") String firstName,
       @RequestParam("lastName") String lastName) {
 
-    List<PersonWithAgeAndMedicalDetails> personInfoList = personInfoService.getPersonInfo(firstName, lastName);
+    List<PersonDetails> personInfoList = personInfoService.getPersonInfo(firstName, lastName);
 
     if (personInfoList.isEmpty()) {
       return ResponseEntity.noContent().build();

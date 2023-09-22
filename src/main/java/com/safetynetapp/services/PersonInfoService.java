@@ -1,6 +1,7 @@
 package com.safetynetapp.services;
 
 import com.safetynetapp.models.Person;
+import com.safetynetapp.models.PersonDetails;
 import com.safetynetapp.models.PersonWithAgeAndMedicalDetails;
 import com.safetynetapp.utilities.DataLoader;
 import com.safetynetapp.utilities.DataUtils;
@@ -20,17 +21,17 @@ public class PersonInfoService {
 
   // Assuming you have appropriate data access methods (e.g., using repositories)
 
-  public List<PersonWithAgeAndMedicalDetails> getPersonInfo(String firstName, String lastName) {
+  public List<PersonDetails> getPersonInfo(String firstName, String lastName) {
     // Implement the logic to fetch person information based on first name and last name
     List<Person> allPeople = dataLoader.loadAllDataFromJson("persons", Person.class);
-    List<PersonWithAgeAndMedicalDetails> peopleWithGivenName = new ArrayList<>();
+    List<PersonDetails> peopleWithGivenName = new ArrayList<>();
 
     for (Person person : allPeople) {
       if (person.getFirstName().equals(firstName) && person.getLastName().equals(lastName)) {
-        PersonWithAgeAndMedicalDetails personWithAgeAndMedicalDetails = dataUtils.getPersonDetails(
+        PersonDetails personWithDetails = dataUtils.getPersonDetailsFor(
             person);
 
-        peopleWithGivenName.add(personWithAgeAndMedicalDetails);
+        peopleWithGivenName.add(personWithDetails);
       }
     }
 

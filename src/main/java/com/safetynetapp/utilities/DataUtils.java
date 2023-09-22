@@ -3,6 +3,7 @@ package com.safetynetapp.utilities;
 import com.safetynetapp.models.FireStation;
 import com.safetynetapp.models.MedicalRecord;
 import com.safetynetapp.models.Person;
+import com.safetynetapp.models.PersonDetails;
 import com.safetynetapp.models.PersonWithAgeAndMedicalDetails;
 import java.util.ArrayList;
 import java.util.List;
@@ -75,6 +76,26 @@ public class DataUtils {
       }
     }
 
+    // If no matching medical record found, return null or handle appropriately.
+    return null;
+  }
+
+  public PersonDetails getPersonDetailsFor(Person person) {
+    List<MedicalRecord> medicalRecords = dataLoader.loadAllDataFromJson("medicalrecords",
+        MedicalRecord.class);
+
+    for (MedicalRecord record : medicalRecords) {
+      if (person.getFirstName().equals(record.getFirstName()) && person.getLastName()
+          .equals(record.getLastName())) {
+        int age = DateUtils.calculateAge(record.getBirthdate());
+
+        return new PersonDetails(
+            person.getFirstName(), person.getLastName(), person.getAddress(), age,
+            person.getEmail(),
+            record.getMedications(), record.getAllergies()
+        );
+      }
+    }
     // If no matching medical record found, return null or handle appropriately.
     return null;
   }
