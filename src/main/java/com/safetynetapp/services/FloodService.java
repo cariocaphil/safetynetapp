@@ -1,12 +1,10 @@
 package com.safetynetapp.services;
 
 import com.safetynetapp.models.FloodInfoResponse;
-import com.safetynetapp.models.MedicalRecord;
 import com.safetynetapp.models.Person;
 import com.safetynetapp.models.PersonWithAgeAndMedicalDetails;
 import com.safetynetapp.utilities.DataLoader;
 import com.safetynetapp.utilities.DataUtils;
-import com.safetynetapp.utilities.DateUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -45,7 +43,7 @@ public class FloodService {
     for (Person person : peopleServicedByStationNumbers) {
       String address = person.getAddress();
 
-      PersonWithAgeAndMedicalDetails personDetails = getPersonDetails(person);
+      PersonWithAgeAndMedicalDetails personDetails = dataUtils.getPersonDetails(person);
 
       groupedByAddress.computeIfAbsent(address, k -> new ArrayList<>()).add(personDetails);
     }
@@ -54,24 +52,6 @@ public class FloodService {
     response.setListHouseholdsAtStation(groupedByAddress);
 
     return response;
-  }
-
-  private PersonWithAgeAndMedicalDetails getPersonDetails(Person person) {
-    List<MedicalRecord> medicalRecords = dataLoader.loadAllDataFromJson("medicalrecords", MedicalRecord.class);
-
-    for (MedicalRecord record : medicalRecords) {
-      if (person.getFirstName().equals(record.getFirstName()) && person.getLastName().equals(record.getLastName())) {
-        int age = DateUtils.calculateAge(record.getBirthdate());
-
-        return new PersonWithAgeAndMedicalDetails(
-            person.getFirstName(), person.getLastName(), person.getPhone(), age,
-            record.getMedications(), record.getAllergies()
-        );
-      }
-    }
-
-    // If no matching medical record found, return null or handle appropriately.
-    return null;
   }
 
 }
