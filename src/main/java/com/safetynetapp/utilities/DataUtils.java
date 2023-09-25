@@ -18,7 +18,7 @@ public class DataUtils {
     this.dataLoader = dataLoader;
   }
 
-  private <T> List<T> loadJsonData(String jsonFileName, Class<T> clazz) {
+  public <T> List<T> loadJsonData(String jsonFileName, Class<T> clazz) {
     return dataLoader.loadAllDataFromJson(jsonFileName, clazz);
   }
 
@@ -60,6 +60,19 @@ public class DataUtils {
     }
 
     return stationNumber;
+  }
+
+  public List<Person> getPeopleLivingAtAddress(String address) {
+    List<Person> allPeople = dataLoader.loadAllDataFromJson("persons", Person.class);
+    List<Person> peopleLivingAtAddress = new ArrayList<>();
+
+    for (Person person : allPeople) {
+      if (person.getAddress().equals(address)) {
+        peopleLivingAtAddress.add(person);
+      }
+    }
+
+    return peopleLivingAtAddress;
   }
 
   public PersonWithAgeAndMedicalDetails getPersonDetails(Person person) {

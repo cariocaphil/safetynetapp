@@ -30,7 +30,7 @@ public class FireService {
       return null;
     }
 
-    List<Person> peopleLivingAtAddress = getPeopleLivingAtAddress(address);
+    List<Person> peopleLivingAtAddress = dataUtils.getPeopleLivingAtAddress(address);
 
     List<PersonWithAgeAndMedicalDetails> customizedPeopleLivingAtAddress =
         customizeListPeopleServicedWithMedicalDetails(peopleLivingAtAddress);
@@ -40,19 +40,6 @@ public class FireService {
     response.setPeopleLivingAtAddress(customizedPeopleLivingAtAddress);
 
     return response;
-  }
-
-  public List<Person> getPeopleLivingAtAddress(String address) {
-    List<Person> allPeople = dataLoader.loadAllDataFromJson("persons", Person.class);
-    List<Person> peopleLivingAtAddress = new ArrayList<>();
-
-    for (Person person : allPeople) {
-      if (person.getAddress().equals(address)) {
-        peopleLivingAtAddress.add(person);
-      }
-    }
-
-    return peopleLivingAtAddress;
   }
 
   public List<PersonWithAgeAndMedicalDetails> customizeListPeopleServicedWithMedicalDetails(List<Person> listPeopleServiced) {
