@@ -18,8 +18,12 @@ public class DataUtils {
     this.dataLoader = dataLoader;
   }
 
+  private <T> List<T> loadJsonData(String jsonFileName, Class<T> clazz) {
+    return dataLoader.loadAllDataFromJson(jsonFileName, clazz);
+  }
+
   public List<Person> getPeopleServicedByFireStation(String stationNumber) {
-    List<Person> allPeople = dataLoader.loadAllDataFromJson("persons", Person.class);
+    List<Person> allPeople = loadJsonData("persons", Person.class);
     List<Person> peopleServicedByStation = new ArrayList<>();
 
     for (Person person : allPeople) {
@@ -32,8 +36,7 @@ public class DataUtils {
   }
 
   private List<String> getAddressesForStation(String stationNumber) {
-    List<FireStation> fireStations = dataLoader.loadAllDataFromJson("firestations",
-        FireStation.class);
+    List<FireStation> fireStations = loadJsonData("firestations", FireStation.class);
     List<String> addresses = new ArrayList<>();
 
     for (FireStation fireStation : fireStations) {
@@ -46,8 +49,7 @@ public class DataUtils {
   }
 
   public Integer getStationForAddress(String address) {
-    List<FireStation> fireStations = dataLoader.loadAllDataFromJson("firestations",
-        FireStation.class);
+    List<FireStation> fireStations = loadJsonData("firestations", FireStation.class);
     Integer stationNumber = null;
 
     for (FireStation fireStation : fireStations) {
@@ -61,9 +63,8 @@ public class DataUtils {
   }
 
   public PersonWithAgeAndMedicalDetails getPersonDetails(Person person) {
-    List<MedicalRecord> medicalRecords = dataLoader.loadAllDataFromJson("medicalrecords",
+    List<MedicalRecord> medicalRecords = loadJsonData("medicalrecords",
         MedicalRecord.class);
-
     for (MedicalRecord record : medicalRecords) {
       if (person.getFirstName().equals(record.getFirstName()) && person.getLastName()
           .equals(record.getLastName())) {
@@ -81,7 +82,7 @@ public class DataUtils {
   }
 
   public PersonDetails getPersonDetailsFor(Person person) {
-    List<MedicalRecord> medicalRecords = dataLoader.loadAllDataFromJson("medicalrecords",
+    List<MedicalRecord> medicalRecords = loadJsonData("medicalrecords",
         MedicalRecord.class);
 
     for (MedicalRecord record : medicalRecords) {
