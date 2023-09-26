@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.tinylog.Logger;
 
 @Service
 public class FireStationService {
@@ -117,7 +118,11 @@ public class FireStationService {
     }
 
     fireStations.add(fireStation);
-    System.out.println(fireStations);
+
+    String stationInfo = String.format("Station Number: %s, Address: %s",
+        fireStation.getStation(), fireStation.getAddress());
+    Logger.info("Added new fire station: {}", stationInfo);
+
     return true; // Mapping added successfully
   }
 
@@ -128,6 +133,9 @@ public class FireStationService {
     for (FireStation fireStation : fireStations) {
       if (fireStation.getAddress().equals(request.getAddress())) {
         fireStation.setStation(request.getStation());
+        String stationInfo = String.format("Station Number: %s, Address: %s",
+            fireStation.getStation(), fireStation.getAddress());
+        Logger.info("Updated fire station: {}", stationInfo);
         return true;
       }
     }
@@ -142,6 +150,9 @@ public class FireStationService {
     for (int i = 0; i < fireStations.size(); i++) {
       if (fireStations.get(i).getAddress().equals(request.getAddress())) {
         fireStations.remove(i);
+        String stationInfo = String.format("Station Number: %s, Address: %s",
+            fireStations.get(i).getStation(), fireStations.get(i).getAddress());
+        Logger.info("Deleted fire station: {}", stationInfo);
         return true; // Deletion successful
       }
     }
