@@ -1,18 +1,22 @@
 package com.safetynetapp.services;
 
+import com.safetynetapp.models.FireStation;
 import com.safetynetapp.models.FireStationInfoResponse;
+import com.safetynetapp.models.FireStationMappingDeleteRequest;
+import com.safetynetapp.models.FireStationMappingUpdateRequest;
+import com.safetynetapp.models.MedicalRecord;
 import com.safetynetapp.models.Person;
 import com.safetynetapp.models.PersonInfo;
-import com.safetynetapp.models.MedicalRecord;
-import com.safetynetapp.models.SummaryChildrenAndAdultsServiced;
 import com.safetynetapp.models.PersonWithAge;
+import com.safetynetapp.models.SummaryChildrenAndAdultsServiced;
 import com.safetynetapp.utilities.DataLoader;
-import com.safetynetapp.utilities.DateUtils;
 import com.safetynetapp.utilities.DataUtils;
+import com.safetynetapp.utilities.DateUtils;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.List;
-import java.util.ArrayList;
+import org.tinylog.Logger;
 
 @Service
 public class FireStationService {
@@ -102,5 +106,59 @@ public class FireStationService {
 
     return personsWithAge;
   }
+
+  public boolean addFireStation(FireStation fireStation) {
+    List<FireStation> fireStations = dataLoader.loadAllDataFromJson("firestations",
+        FireStation.class);
+
+    for (FireStation existingMapping : fireStations) {
+      if (existingMapping.getAddress().equals(fireStation.getAddress())) {
+        return false; // Mapping already exists, return false
+      }
+    }
+
+    fireStations.add(fireStation);
+
+    String stationInfo = String.format("Station Number: %s, Address: %s",
+        fireStation.getStation(), fireStation.getAddress());
+    Logger.info("Added new fire station: {}", stationInfo);
+
+    return true; // Mapping added successfully
+  }
+
+  public boolean updateFireStation(FireStationMappingUpdateRequest request) {
+    List<FireStation> fireStations = dataLoader.loadAllDataFromJson("firestations",
+        FireStation.class);
+
+    for (FireStation fireStation : fireStations) {
+      if (fireStation.getAddress().equals(request.getAddress())) {
+        fireStation.setStation(request.getStation());
+        String stationInfo = String.format("Station Number: %s, Address: %s",
+            fireStation.getStation(), fireStation.getAddress());
+        Logger.info("Updated fire station: {}", stationInfo);
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  public boolean deleteFireStationMapping(FireStationMappingDeleteRequest request) {
+    List<FireStation> fireStations = dataLoader.loadAllDataFromJson("firestations",
+        FireStation.class);
+
+    for (int i = 0; i < fireStations.size(); i++) {
+      if (fireStations.get(i).getAddress().equals(request.getAddress())) {
+        fireStations.remove(i);
+        String stationInfo = String.format("Station Number: %s, Address: %s",
+            fireStations.get(i).getStation(), fireStations.get(i).getAddress());
+        Logger.info("Deleted fire station: {}", stationInfo);
+        return true; // Deletion successful
+      }
+    }
+
+    return false; // Mapping not found
+  }
+
 
 }
