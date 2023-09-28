@@ -3,11 +3,12 @@ package com.safetynetapp.services;
 import com.safetynetapp.models.Person;
 import com.safetynetapp.utilities.DataLoader;
 import com.safetynetapp.utilities.DataUtils;
-import java.util.ArrayList;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tinylog.Logger;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class PersonService {

@@ -2,13 +2,14 @@ package com.safetynetapp.services;
 
 import com.safetynetapp.models.Person;
 import com.safetynetapp.models.PersonDetails;
-import com.safetynetapp.models.PersonWithAgeAndMedicalDetails;
 import com.safetynetapp.utilities.DataLoader;
 import com.safetynetapp.utilities.DataUtils;
-import java.util.ArrayList;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.tinylog.Logger;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class PersonInfoService {
@@ -32,11 +33,14 @@ public class PersonInfoService {
             person);
 
         peopleWithGivenName.add(personWithDetails);
+
+        Logger.info("Retrieved person details for: {} {}", firstName, lastName);
+        return peopleWithGivenName;
       }
     }
 
+    Logger.warn("Person not found for: {} {}", firstName, lastName);
     return peopleWithGivenName;
-
   }
 
 }

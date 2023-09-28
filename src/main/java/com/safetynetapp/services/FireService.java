@@ -10,6 +10,7 @@ import com.safetynetapp.utilities.DataUtils;
 import com.safetynetapp.utilities.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,8 @@ public class FireService {
   private DataUtils dataUtils;
 
   public FireInfoResponse getFireInfo(String address) {
+    Logger.debug("Received request for FireInfo with address: {}", address);
+
     Integer stationServicingAddress = dataUtils.getStationForAddress(address);
 
     if (stationServicingAddress == null) {
@@ -38,6 +41,8 @@ public class FireService {
     FireStationInfoResponse.FireInfoResponse response = new FireStationInfoResponse.FireInfoResponse();
     response.setStationNumber(stationServicingAddress);
     response.setPeopleLivingAtAddress(customizedPeopleLivingAtAddress);
+
+    Logger.info("FireInfo retrieved for address: {}", address);
 
     return response;
   }
@@ -61,7 +66,8 @@ public class FireService {
         }
       }
     }
+
+    Logger.debug("Customized People List with Medical Details generated");
     return personWithMedicalDetailsList;
   }
-
 }
