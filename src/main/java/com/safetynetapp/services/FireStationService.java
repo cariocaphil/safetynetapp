@@ -12,11 +12,12 @@ import com.safetynetapp.models.SummaryChildrenAndAdultsServiced;
 import com.safetynetapp.utilities.DataLoader;
 import com.safetynetapp.utilities.DataUtils;
 import com.safetynetapp.utilities.DateUtils;
-import java.util.ArrayList;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tinylog.Logger;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class FireStationService {
@@ -40,6 +41,8 @@ public class FireStationService {
   }
 
   public FireStationInfoResponse getFireStationInfo(String stationNumber) {
+    Logger.debug("Received request for Fire Station Info with station number: {}", stationNumber);
+
     List<Person> listPeopleServiced = dataUtils.getPeopleServicedByFireStation(stationNumber);
 
     if (listPeopleServiced.isEmpty()) {
@@ -51,6 +54,8 @@ public class FireStationService {
     response.setPeopleServiced(customizedListPeopleServiced);
     response.setSummaryChildrenAndAdultsServiced(
         getNumberChildrenAndAdultsServived(listPeopleServiced));
+
+    Logger.info("Fire Station Info retrieved for station number: {}", stationNumber);
 
     return response;
   }
@@ -87,6 +92,7 @@ public class FireStationService {
     summary.setChildren(numChildren);
     summary.setAdults(numAdults);
 
+    Logger.debug("Calculated summary of children and adults serviced");
     return summary;
   }
 
@@ -104,6 +110,7 @@ public class FireStationService {
       }
     }
 
+    Logger.debug("Added age to persons from medical records");
     return personsWithAge;
   }
 
@@ -113,6 +120,7 @@ public class FireStationService {
 
     for (FireStation existingMapping : fireStations) {
       if (existingMapping.getAddress().equals(fireStation.getAddress())) {
+        Logger.info("Fire station mapping already exists for address: {}", fireStation.getAddress());
         return false; // Mapping already exists, return false
       }
     }
@@ -140,6 +148,7 @@ public class FireStationService {
       }
     }
 
+    Logger.info("Fire station not found for address: {}", request.getAddress());
     return false;
   }
 
@@ -157,8 +166,7 @@ public class FireStationService {
       }
     }
 
+    Logger.info("Fire station not found for address: {}", request.getAddress());
     return false; // Mapping not found
   }
-
-
 }

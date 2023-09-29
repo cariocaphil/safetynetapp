@@ -5,12 +5,9 @@ import com.safetynetapp.services.MedicalRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import org.tinylog.Logger;
 
 @RestController
 public class MedicalRecordController {
@@ -24,6 +21,9 @@ public class MedicalRecordController {
 
   @PostMapping("/medicalRecord")
   public ResponseEntity<Object> addMedicalRecord(@RequestBody MedicalRecord medicalRecord) {
+    // Log the request
+    Logger.info("Request received to add medical record for: {} {}", medicalRecord.getFirstName(), medicalRecord.getLastName());
+
     boolean success = medicalRecordService.addMedicalRecord(medicalRecord);
     if (success) {
       return ResponseEntity.ok().body("Medical record added successfully.");
@@ -34,6 +34,9 @@ public class MedicalRecordController {
 
   @PutMapping("/medicalRecord")
   public ResponseEntity<Object> updateMedicalRecord(@RequestBody MedicalRecord medicalRecord) {
+    // Log the request
+    Logger.info("Request received to update medical record for: {} {}", medicalRecord.getFirstName(), medicalRecord.getLastName());
+
     boolean success = medicalRecordService.updateMedicalRecord(medicalRecord);
     if (success) {
       return ResponseEntity.ok().body("Medical record updated successfully.");
@@ -45,6 +48,9 @@ public class MedicalRecordController {
   @DeleteMapping("/medicalRecord")
   public ResponseEntity<Object> deleteMedicalRecord(@RequestParam("firstName") String firstName,
       @RequestParam("lastName") String lastName) {
+    // Log the request
+    Logger.info("Request received to delete medical record for: {} {}", firstName, lastName);
+
     boolean success = medicalRecordService.deleteMedicalRecord(firstName, lastName);
     if (success) {
       return ResponseEntity.ok().body("Medical record deleted successfully.");

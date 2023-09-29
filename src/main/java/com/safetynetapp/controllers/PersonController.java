@@ -5,6 +5,7 @@ import com.safetynetapp.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.tinylog.Logger;
 
 @RestController
 public class PersonController {
@@ -18,6 +19,9 @@ public class PersonController {
 
   @PostMapping("/person")
   public ResponseEntity<String> addPerson(@RequestBody Person person) {
+    // Log the request
+    Logger.info("Request received to add person: {} {}", person.getFirstName(), person.getLastName());
+
     boolean success = personService.addPerson(person);
 
     if (success) {
@@ -29,6 +33,9 @@ public class PersonController {
 
   @PutMapping("/person")
   public ResponseEntity<String> updatePerson(@RequestBody Person person) {
+    // Log the request
+    Logger.info("Request received to update person: {} {}", person.getFirstName(), person.getLastName());
+
     boolean success = personService.updatePerson(person);
 
     if (success) {
@@ -40,6 +47,9 @@ public class PersonController {
 
   @DeleteMapping("/person")
   public ResponseEntity<String> deletePerson(@RequestParam String firstName, @RequestParam String lastName) {
+    // Log the request
+    Logger.info("Request received to delete person: {} {}", firstName, lastName);
+
     boolean success = personService.deletePerson(firstName, lastName);
 
     if (success) {

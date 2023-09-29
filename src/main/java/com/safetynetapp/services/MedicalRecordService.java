@@ -3,10 +3,11 @@ package com.safetynetapp.services;
 import com.safetynetapp.models.MedicalRecord;
 import com.safetynetapp.utilities.DataLoader;
 import com.safetynetapp.utilities.DataUtils;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tinylog.Logger;
+
+import java.util.List;
 
 @Service
 public class MedicalRecordService {
@@ -24,6 +25,8 @@ public class MedicalRecordService {
     for (MedicalRecord existingRecord : medicalRecords) {
       if (existingRecord.getFirstName().equals(medicalRecord.getFirstName())
           && existingRecord.getLastName().equals(medicalRecord.getLastName())) {
+        Logger.warn("Medical record already exists for: {} {}", medicalRecord.getFirstName(),
+            medicalRecord.getLastName());
         return false; // Medical record already exists
       }
     }
@@ -71,5 +74,4 @@ public class MedicalRecordService {
     Logger.warn("Medical record not found for: {} {}", firstName, lastName);
     return false; // Medical record not found
   }
-
 }

@@ -5,13 +5,15 @@ import com.safetynetapp.models.Person;
 import com.safetynetapp.models.PersonWithAgeAndMedicalDetails;
 import com.safetynetapp.utilities.DataLoader;
 import com.safetynetapp.utilities.DataUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.tinylog.Logger;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 @Service
 public class FloodService {
@@ -33,6 +35,7 @@ public class FloodService {
 
     List<String> stations = convertStationParamToList(stationNumbers);
     List<Person> peopleServicedByStationNumbers = new ArrayList<>();
+
     for (String station : stations) {
       List<Person> peopleServiceByStation = dataUtils.getPeopleServicedByFireStation(station);
       peopleServicedByStationNumbers.addAll(peopleServiceByStation);
@@ -51,7 +54,8 @@ public class FloodService {
     FloodInfoResponse response = new FloodInfoResponse();
     response.setListHouseholdsAtStation(groupedByAddress);
 
+    Logger.info("Flood info retrieved for stations: {}", stationNumbers);
+
     return response;
   }
-
 }
