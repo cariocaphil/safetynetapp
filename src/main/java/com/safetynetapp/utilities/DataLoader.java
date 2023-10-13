@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import org.springframework.stereotype.Service;
+import org.tinylog.Logger;
 
 @Service
 public class DataLoader {
@@ -36,8 +37,8 @@ public class DataLoader {
       }
       return dataList;
     } catch (IOException e) {
-      e.printStackTrace();
-      return null; // TODO: Handle exception
+      Logger.error(e, "Error loading data from JSON: {}", e.getMessage());
+      return null;
     }
   }
 }
