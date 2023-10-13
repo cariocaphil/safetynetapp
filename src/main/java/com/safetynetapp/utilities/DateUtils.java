@@ -3,6 +3,7 @@ package com.safetynetapp.utilities;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import org.tinylog.Logger;
 
 public class DateUtils {
   public static int calculateAge(String birthdate) {
@@ -17,8 +18,8 @@ public class DateUtils {
       }
       return age;
     } catch (ParseException e) {
-      e.printStackTrace();
-      return -1; // Handle error
+      Logger.error(e, "Error parsing birthdate: {}", e.getMessage());
+      return -1;
     }
   }
 }

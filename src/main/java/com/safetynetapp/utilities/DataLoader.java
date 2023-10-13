@@ -2,12 +2,14 @@ package com.safetynetapp.utilities;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.safetynetapp.utilities.exceptions.DataLoadException;
 import org.springframework.core.io.ResourceLoader;
 import java.util.ArrayList;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import org.springframework.stereotype.Service;
+import org.tinylog.Logger;
 
 @Service
 public class DataLoader {
@@ -36,8 +38,7 @@ public class DataLoader {
       }
       return dataList;
     } catch (IOException e) {
-      e.printStackTrace();
-      return null; // TODO: Handle exception
+      throw new DataLoadException("Error loading data from JSON", e);
     }
   }
 }
