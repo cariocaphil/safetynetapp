@@ -5,6 +5,16 @@ public class SimpleChildInfo {
   private String lastName;
   private int age;
 
+  public SimpleChildInfo() {
+
+  }
+
+  public SimpleChildInfo(String firstName, String lastName, int age) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.age = age;
+  }
+
   public String getFirstName() {
     return firstName;
   }

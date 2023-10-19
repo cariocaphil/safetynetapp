@@ -11,6 +11,10 @@ public class ChildInfoResponse {
     this.otherPersons = otherPersons;
   }
 
+  public ChildInfoResponse() {
+
+  }
+
   public List<SimpleChildInfo> getChildren() {
     return children;
   }
