@@ -74,4 +74,12 @@ public class MedicalRecordService {
     Logger.warn("Medical record not found for: {} {}", firstName, lastName);
     return false; // Medical record not found
   }
+
+  public void setDataLoader(DataLoader dataLoader) {
+    this.dataLoader = dataLoader;
+  }
+
+  public void setDataUtils(DataUtils dataUtils) {
+    this.dataUtils = dataUtils;
+  }
 }
