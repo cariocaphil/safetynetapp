@@ -43,4 +43,11 @@ public class PersonInfoService {
     return peopleWithGivenName;
   }
 
+  public void setDataLoader(DataLoader dataLoader) {
+    this.dataLoader = dataLoader;
+  }
+
+  public void setDataUtils(DataUtils dataUtils) {
+    this.dataUtils = dataUtils;
+  }
 }
