@@ -35,4 +35,8 @@ public class CommunityEmailService {
 
     return communityEmails;
   }
+
+  public void setDataLoader(DataLoader dataLoader) {
+    this.dataLoader = dataLoader;
+  }
 }
