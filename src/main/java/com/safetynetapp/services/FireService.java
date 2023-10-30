@@ -70,4 +70,12 @@ public class FireService {
     Logger.debug("Customized People List with Medical Details generated");
     return personWithMedicalDetailsList;
   }
+
+  public void setDataLoader(DataLoader dataLoader) {
+    this.dataLoader = dataLoader;
+  }
+
+  public void setDataUtils(DataUtils dataUtils) {
+    this.dataUtils = dataUtils;
+  }
 }
