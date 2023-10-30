@@ -1,5 +1,7 @@
 package com.safetynetapp.models;
 
+import java.util.Objects;
+
 public class SimpleChildInfo {
   private String firstName;
   private String lastName;
@@ -37,6 +39,21 @@ public class SimpleChildInfo {
 
   public void setAge(int age) {
     this.age = age;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    SimpleChildInfo that = (SimpleChildInfo) o;
+    return age == that.age &&
+        Objects.equals(firstName, that.firstName) &&
+        Objects.equals(lastName, that.lastName);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(firstName, lastName, age);
   }
 
 }
