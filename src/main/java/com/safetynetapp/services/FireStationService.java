@@ -115,8 +115,7 @@ public class FireStationService {
   }
 
   public boolean addFireStation(FireStation fireStation) {
-    List<FireStation> fireStations = dataLoader.loadAllDataFromJson("firestations",
-        FireStation.class);
+    List<FireStation> fireStations = new ArrayList<>(dataLoader.loadAllDataFromJson("firestations", FireStation.class));
 
     for (FireStation existingMapping : fireStations) {
       if (existingMapping.getAddress().equals(fireStation.getAddress())) {
@@ -153,8 +152,12 @@ public class FireStationService {
   }
 
   public boolean deleteFireStationMapping(FireStationMappingDeleteRequest request) {
-    List<FireStation> fireStations = dataLoader.loadAllDataFromJson("firestations",
-        FireStation.class);
+    List<FireStation> fireStations = dataLoader.loadAllDataFromJson("firestations", FireStation.class);
+
+    if (request.getAddress() == null) {
+      Logger.info("Address in delete request is null.");
+      return false; // Address is null, return false
+    }
 
     for (int i = 0; i < fireStations.size(); i++) {
       if (fireStations.get(i).getAddress().equals(request.getAddress())) {
