@@ -32,6 +32,10 @@ public class PersonService {
 
   private List<Person> personList = new ArrayList<>();
 
+  public List<Person> getPersonList() {
+    return personList;
+  }
+
   public boolean addPerson(Person person) {
     Logger.info("Adding person: {} {}", person.getFirstName(), person.getLastName());
 
