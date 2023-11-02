@@ -119,4 +119,41 @@ import static org.mockito.Mockito.when;
     assertEquals(expectedSimpleChildInfoList, simpleChildInfoList);
   }
 
+    @Test
+    void testGetChildAlertInfo_BothChildrenAndAdults() {
+      // Arrange
+      String address = "123 Main St";
+
+      List<Person> persons = new ArrayList<>();
+      persons.add(new Person("John", "Doe", "123 Main St", "Anytown", "12345", "555-555-5555", "john.doe@example.com"));
+      persons.add(new Person("Jane", "Doe", "123 Main St", "Anytown", "12345", "555-555-5555", "jane.doe@example.com"));
+
+      List<MedicalRecord> medicalRecords = new ArrayList<>();
+      medicalRecords.add(new MedicalRecord("John", "Doe", "01/01/2010", new ArrayList<>(), new ArrayList<>()));
+      medicalRecords.add(new MedicalRecord("Jane", "Doe", "01/01/1990", new ArrayList<>(), new ArrayList<>()));
+
+      List<PersonWithAge> children = new ArrayList<>();
+      List<Person> otherPersons = new ArrayList<>();
+
+      when(dataLoader.loadAllDataFromJson(eq("persons"), eq(Person.class))).thenReturn(persons);
+      when(dataLoader.loadAllDataFromJson(eq("medicalrecords"), eq(MedicalRecord.class))).thenReturn(medicalRecords);
+
+      // Act
+      ChildInfoResponse childInfoResponse = childAlertService.getChildAlertInfo(address);
+
+      // Assert
+      verify(dataLoader, times(1)).loadAllDataFromJson(eq("persons"), eq(Person.class));
+      verify(dataLoader, times(1)).loadAllDataFromJson(eq("medicalrecords"), eq(MedicalRecord.class));
+
+      // Verify that children were correctly added to the 'children' list
+      assertEquals(1, childInfoResponse.getChildren().size());
+      assertEquals("John", childInfoResponse.getChildren().get(0).getFirstName());
+      assertEquals("Doe", childInfoResponse.getChildren().get(0).getLastName());
+
+      // Verify that other persons were correctly added to the 'otherPersons' list
+      assertEquals(1, childInfoResponse.getOtherPersons().size());
+      assertEquals("Jane", childInfoResponse.getOtherPersons().get(0).getFirstName());
+      assertEquals("Doe", childInfoResponse.getOtherPersons().get(0).getLastName());
+    }
+
 }
