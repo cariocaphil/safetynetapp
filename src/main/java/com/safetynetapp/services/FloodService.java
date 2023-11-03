@@ -58,4 +58,12 @@ public class FloodService {
 
     return response;
   }
+
+  public void setDataLoader(DataLoader dataLoader) {
+    this.dataLoader = dataLoader;
+  }
+
+  public void setDataUtils(DataUtils dataUtils) {
+    this.dataUtils = dataUtils;
+  }
 }

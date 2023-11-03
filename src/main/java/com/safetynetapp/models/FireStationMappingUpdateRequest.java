@@ -5,6 +5,14 @@ public class FireStationMappingUpdateRequest {
   private String address;
   private String station;
 
+  public FireStationMappingUpdateRequest(String address, String station) {
+    this.address = address;
+    this.station = station;
+  }
+
+  public FireStationMappingUpdateRequest() {
+  }
+
   public String getAddress() {
     return address;
   }

@@ -1,6 +1,7 @@
 package com.safetynetapp.models;
 
 import java.util.List;
+import java.util.Objects;
 
 public class PersonWithAgeAndMedicalDetails {
   private String firstName;
@@ -69,5 +70,21 @@ public class PersonWithAgeAndMedicalDetails {
     this.allergies = allergies;
   }
 
-  // Getters and setters for firstName, lastName, phone, age, medications, and allergies
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) return true;
+    if (obj == null || getClass() != obj.getClass()) return false;
+    PersonWithAgeAndMedicalDetails other = (PersonWithAgeAndMedicalDetails) obj;
+    return firstName.equals(other.firstName) &&
+        lastName.equals(other.lastName) &&
+        phone.equals(other.phone) &&
+        age == other.age &&
+        medications.equals(other.medications) &&
+        allergies.equals(other.allergies);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(firstName, lastName, phone, age, medications, allergies);
+  }
 }
