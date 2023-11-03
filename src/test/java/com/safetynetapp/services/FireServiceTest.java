@@ -8,6 +8,7 @@ import com.safetynetapp.utilities.DateUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.tinylog.Logger;
 
@@ -16,6 +17,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.*;
 
 class FireServiceTest {
@@ -68,4 +70,18 @@ class FireServiceTest {
     assertEquals(expectedPeopleList, fireInfoResponse.getPeopleLivingAtAddress());
   }
 
+  @Test
+  void testGetFireInfoNullStation() {
+    // Arrange
+    String address = "123 Main St";
+
+    // Mock dataUtils behavior to return null for getStationForAddress
+    when(dataUtils.getStationForAddress(address)).thenReturn(null);
+
+    // Act
+    FireInfoResponse fireInfoResponse = fireService.getFireInfo(address);
+
+    // Assert
+    assertNull(fireInfoResponse);
+  }
 }
