@@ -1,7 +1,7 @@
 package com.safetynetapp.controllers;
 
 import com.safetynetapp.models.FireInfoResponse;
-import com.safetynetapp.services.FireService;
+import com.safetynetapp.services.interfaces.FireInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,10 +12,10 @@ import org.tinylog.Logger;
 @RestController
 public class FireController {
 
-  private final FireService fireService;
+  private final FireInfoService fireService;
 
   @Autowired
-  public FireController(FireService fireService) {
+  public FireController(FireInfoService fireService) {
     this.fireService = fireService;
   }
 
