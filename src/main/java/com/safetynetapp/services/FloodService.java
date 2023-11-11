@@ -34,12 +34,7 @@ public class FloodService {
   public FloodInfoResponse getFloodInfo(String stationNumbers) {
 
     List<String> stations = convertStationParamToList(stationNumbers);
-    List<Person> peopleServicedByStationNumbers = new ArrayList<>();
-
-    for (String station : stations) {
-      List<Person> peopleServiceByStation = dataUtils.getPeopleServicedByFireStation(station);
-      peopleServicedByStationNumbers.addAll(peopleServiceByStation);
-    }
+    List<Person> peopleServicedByStationNumbers = getPeopleServicedByStations(stations);
 
     // group by address
     Map<String, List<PersonWithAgeAndMedicalDetails>> groupedByAddress = new HashMap<>();
@@ -57,6 +52,17 @@ public class FloodService {
     Logger.info("Flood info retrieved for stations: {}", stationNumbers);
 
     return response;
+  }
+
+  private List<Person> getPeopleServicedByStations(List<String> stationNumbers) {
+    List<Person> peopleServicedByStations = new ArrayList<>();
+
+    for (String station : stationNumbers) {
+      List<Person> peopleServicedByStation = dataUtils.getPeopleServicedByFireStation(station);
+      peopleServicedByStations.addAll(peopleServicedByStation);
+    }
+
+    return peopleServicedByStations;
   }
 
   public void setDataLoader(DataLoader dataLoader) {
