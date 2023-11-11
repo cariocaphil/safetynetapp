@@ -2,6 +2,7 @@ package com.safetynetapp.services;
 
 import com.safetynetapp.models.*;
 import com.safetynetapp.models.FireInfoResponse;
+import com.safetynetapp.utilities.Constants;
 import com.safetynetapp.utilities.DataLoader;
 import com.safetynetapp.utilities.DataUtils;
 import com.safetynetapp.utilities.DateUtils;
@@ -56,7 +57,7 @@ class FireServiceTest {
 
 
 
-    when(dataLoader.loadAllDataFromJson("medicalrecords", MedicalRecord.class)).thenReturn(medicalRecords);
+    when(dataLoader.loadAllDataFromJson(Constants.MEDICAL_RECORDS, MedicalRecord.class)).thenReturn(medicalRecords);
 
     // Act
     FireInfoResponse fireInfoResponse = fireService.getFireInfo(address);

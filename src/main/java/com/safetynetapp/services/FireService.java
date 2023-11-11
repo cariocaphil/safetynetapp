@@ -4,6 +4,7 @@ import com.safetynetapp.models.FireInfoResponse;
 import com.safetynetapp.models.MedicalRecord;
 import com.safetynetapp.models.Person;
 import com.safetynetapp.models.PersonWithAgeAndMedicalDetails;
+import com.safetynetapp.utilities.Constants;
 import com.safetynetapp.utilities.DataLoader;
 import com.safetynetapp.utilities.DataUtils;
 import com.safetynetapp.utilities.DateUtils;
@@ -47,7 +48,7 @@ public class FireService {
   }
 
   public List<PersonWithAgeAndMedicalDetails> customizeListPeopleServicedWithMedicalDetails(List<Person> listPeopleServiced) {
-    List<MedicalRecord> medicalRecords = dataLoader.loadAllDataFromJson("medicalrecords", MedicalRecord.class);
+    List<MedicalRecord> medicalRecords = dataLoader.loadAllDataFromJson(Constants.MEDICAL_RECORDS, MedicalRecord.class);
 
     List<PersonWithAgeAndMedicalDetails> personWithMedicalDetailsList = new ArrayList<>();
     for (Person person : listPeopleServiced) {

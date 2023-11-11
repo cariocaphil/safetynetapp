@@ -2,6 +2,7 @@ package com.safetynetapp.services;
 
 import com.safetynetapp.models.Person;
 import com.safetynetapp.models.PersonDetails;
+import com.safetynetapp.utilities.Constants;
 import com.safetynetapp.utilities.DataLoader;
 import com.safetynetapp.utilities.DataUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class PersonInfoService {
 
   public List<PersonDetails> getPersonInfo(String firstName, String lastName) {
     // Implement the logic to fetch person information based on first name and last name
-    List<Person> allPeople = dataLoader.loadAllDataFromJson("persons", Person.class);
+    List<Person> allPeople = dataLoader.loadAllDataFromJson(Constants.PERSONS, Person.class);
     List<PersonDetails> peopleWithGivenName = new ArrayList<>();
 
     for (Person person : allPeople) {

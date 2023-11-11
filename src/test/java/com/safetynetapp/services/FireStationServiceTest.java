@@ -6,6 +6,7 @@ import com.safetynetapp.models.FireStationMappingDeleteRequest;
 import com.safetynetapp.models.FireStationMappingUpdateRequest;
 import com.safetynetapp.models.Person;
 import com.safetynetapp.services.FireStationService;
+import com.safetynetapp.utilities.Constants;
 import com.safetynetapp.utilities.DataLoader;
 import com.safetynetapp.utilities.DataUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -57,7 +58,7 @@ class FireStationServiceTest {
     FireStation fireStation = new FireStation("123 Main St", "Station 1");
 
     List<FireStation> mockFireStations = Collections.emptyList();
-    when(dataLoader.loadAllDataFromJson("firestations", FireStation.class)).thenReturn(mockFireStations);
+    when(dataLoader.loadAllDataFromJson(Constants.FIRESTATIONS, FireStation.class)).thenReturn(mockFireStations);
 
     boolean result = fireStationService.addFireStation(fireStation);
 
@@ -72,7 +73,7 @@ class FireStationServiceTest {
         new FireStation("123 Main St", "Station 1")
     );
 
-    when(dataLoader.loadAllDataFromJson("firestations", FireStation.class)).thenReturn(mockFireStations);
+    when(dataLoader.loadAllDataFromJson(Constants.FIRESTATIONS, FireStation.class)).thenReturn(mockFireStations);
 
     boolean result = fireStationService.updateFireStation(updateRequest);
 

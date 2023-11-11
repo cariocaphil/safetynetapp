@@ -1,6 +1,7 @@
 package com.safetynetapp.services;
 
 import com.safetynetapp.models.Person;
+import com.safetynetapp.utilities.Constants;
 import com.safetynetapp.utilities.DataLoader;
 import com.safetynetapp.utilities.DataUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -40,7 +41,7 @@ class PersonServiceTest {
     assertTrue(result);
     assertEquals(1, personService.getPersonList().size());
     assertEquals(person, personService.getPersonList().get(0));
-    verify(dataUtils, times(1)).loadJsonData(eq("persons"), eq(Person.class));
+    verify(dataUtils, times(1)).loadJsonData(eq(Constants.PERSONS), eq(Person.class));
   }
 
   @Test
@@ -52,7 +53,7 @@ class PersonServiceTest {
 
     assertFalse(result);
     assertEquals(1, personService.getPersonList().size());
-    verify(dataUtils, times(1)).loadJsonData(eq("persons"), eq(Person.class));
+    verify(dataUtils, times(1)).loadJsonData(eq(Constants.PERSONS), eq(Person.class));
   }
 
   @Test
@@ -67,7 +68,7 @@ class PersonServiceTest {
     assertEquals("456 Oak St", originalPerson.getAddress());
     assertEquals("New City", originalPerson.getCity());
     assertEquals("67890", originalPerson.getZip());
-    verify(dataUtils, times(1)).loadJsonData(eq("persons"), eq(Person.class));
+    verify(dataUtils, times(1)).loadJsonData(eq(Constants.PERSONS), eq(Person.class));
   }
 
   @Test
@@ -77,7 +78,7 @@ class PersonServiceTest {
     boolean result = personService.updatePerson(updatedPerson);
 
     assertFalse(result);
-    verify(dataUtils, times(1)).loadJsonData(eq("persons"), eq(Person.class));
+    verify(dataUtils, times(1)).loadJsonData(eq(Constants.PERSONS), eq(Person.class));
   }
 
   @Test
@@ -89,7 +90,7 @@ class PersonServiceTest {
 
     assertTrue(result);
     assertEquals(0, personService.getPersonList().size());
-    verify(dataUtils, times(1)).loadJsonData(eq("persons"), eq(Person.class));
+    verify(dataUtils, times(1)).loadJsonData(eq(Constants.PERSONS), eq(Person.class));
   }
 
   @Test
@@ -97,6 +98,6 @@ class PersonServiceTest {
     boolean result = personService.deletePerson("John", "Doe");
 
     assertFalse(result);
-    verify(dataUtils, times(1)).loadJsonData(eq("persons"), eq(Person.class));
+    verify(dataUtils, times(1)).loadJsonData(eq(Constants.PERSONS), eq(Person.class));
   }
 }

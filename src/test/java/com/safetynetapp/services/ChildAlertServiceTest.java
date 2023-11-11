@@ -5,6 +5,7 @@ import com.safetynetapp.models.Person;
 import com.safetynetapp.models.PersonWithAge;
 import com.safetynetapp.models.MedicalRecord;
 import com.safetynetapp.models.SimpleChildInfo;
+import com.safetynetapp.utilities.Constants;
 import com.safetynetapp.utilities.DataLoader;
 import com.safetynetapp.utilities.DateUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -40,9 +41,9 @@ import static org.mockito.Mockito.when;
     @Test
     void testGetChildAlertInfoWithChildren() {
       // Mocking dataLoader
-      when(dataLoader.loadAllDataFromJson(eq("persons"), eq(Person.class)))
+      when(dataLoader.loadAllDataFromJson(eq(Constants.PERSONS), eq(Person.class)))
           .thenReturn(createMockPersonList());
-      when(dataLoader.loadAllDataFromJson(eq("medicalrecords"), eq(MedicalRecord.class)))
+      when(dataLoader.loadAllDataFromJson(eq(Constants.MEDICAL_RECORDS), eq(MedicalRecord.class)))
           .thenReturn(createMockMedicalRecordList());
 
       // Testing the service method
@@ -70,15 +71,15 @@ import static org.mockito.Mockito.when;
       List<PersonWithAge> children = new ArrayList<>();
       List<Person> otherPersons = new ArrayList<>(persons);
 
-      when(dataLoader.loadAllDataFromJson(eq("persons"), eq(Person.class))).thenReturn(persons);
-      when(dataLoader.loadAllDataFromJson(eq("medicalrecords"), eq(MedicalRecord.class))).thenReturn(medicalRecords);
+      when(dataLoader.loadAllDataFromJson(eq(Constants.PERSONS), eq(Person.class))).thenReturn(persons);
+      when(dataLoader.loadAllDataFromJson(eq(Constants.MEDICAL_RECORDS), eq(MedicalRecord.class))).thenReturn(medicalRecords);
 
       // Act
       ChildInfoResponse childInfoResponse = childAlertService.getChildAlertInfo(address);
 
       // Assert
-      verify(dataLoader, times(1)).loadAllDataFromJson(eq("persons"), eq(Person.class));
-      verify(dataLoader, times(1)).loadAllDataFromJson(eq("medicalrecords"), eq(MedicalRecord.class));
+      verify(dataLoader, times(1)).loadAllDataFromJson(eq(Constants.PERSONS), eq(Person.class));
+      verify(dataLoader, times(1)).loadAllDataFromJson(eq(Constants.MEDICAL_RECORDS), eq(MedicalRecord.class));
 
       assertEquals(otherPersons, childInfoResponse.getOtherPersons());
     }
@@ -135,15 +136,15 @@ import static org.mockito.Mockito.when;
       List<PersonWithAge> children = new ArrayList<>();
       List<Person> otherPersons = new ArrayList<>();
 
-      when(dataLoader.loadAllDataFromJson(eq("persons"), eq(Person.class))).thenReturn(persons);
-      when(dataLoader.loadAllDataFromJson(eq("medicalrecords"), eq(MedicalRecord.class))).thenReturn(medicalRecords);
+      when(dataLoader.loadAllDataFromJson(eq(Constants.PERSONS), eq(Person.class))).thenReturn(persons);
+      when(dataLoader.loadAllDataFromJson(eq(Constants.MEDICAL_RECORDS), eq(MedicalRecord.class))).thenReturn(medicalRecords);
 
       // Act
       ChildInfoResponse childInfoResponse = childAlertService.getChildAlertInfo(address);
 
       // Assert
-      verify(dataLoader, times(1)).loadAllDataFromJson(eq("persons"), eq(Person.class));
-      verify(dataLoader, times(1)).loadAllDataFromJson(eq("medicalrecords"), eq(MedicalRecord.class));
+      verify(dataLoader, times(1)).loadAllDataFromJson(eq(Constants.PERSONS), eq(Person.class));
+      verify(dataLoader, times(1)).loadAllDataFromJson(eq(Constants.MEDICAL_RECORDS), eq(MedicalRecord.class));
 
       // Verify that children were correctly added to the 'children' list
       assertEquals(1, childInfoResponse.getChildren().size());

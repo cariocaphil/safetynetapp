@@ -3,6 +3,7 @@ package com.safetynetapp.services;
 import com.safetynetapp.models.FloodInfoResponse;
 import com.safetynetapp.models.Person;
 import com.safetynetapp.models.PersonWithAgeAndMedicalDetails;
+import com.safetynetapp.utilities.Constants;
 import com.safetynetapp.utilities.DataLoader;
 import com.safetynetapp.utilities.DataUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -46,7 +47,7 @@ class FloodServiceTest {
         new Person("Jim", "Smith", "456 Oak Ave", "Sometown", "67890", "555-555-5555", "jim.smith@example.com")
     );
 
-    when(dataLoader.loadAllDataFromJson("persons", Person.class)).thenReturn(mockPeople);
+    when(dataLoader.loadAllDataFromJson(Constants.PERSONS, Person.class)).thenReturn(mockPeople);
 
     when(dataUtils.getPeopleServicedByFireStation("1")).thenReturn(Arrays.asList(
         mockPeople.get(0),

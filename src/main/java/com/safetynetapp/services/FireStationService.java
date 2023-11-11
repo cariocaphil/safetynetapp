@@ -9,6 +9,7 @@ import com.safetynetapp.models.Person;
 import com.safetynetapp.models.PersonInfo;
 import com.safetynetapp.models.PersonWithAge;
 import com.safetynetapp.models.SummaryChildrenAndAdultsServiced;
+import com.safetynetapp.utilities.Constants;
 import com.safetynetapp.utilities.DataLoader;
 import com.safetynetapp.utilities.DataUtils;
 import com.safetynetapp.utilities.DateUtils;
@@ -75,7 +76,7 @@ public class FireStationService {
     int numAdults = 0;
     int numChildren = 0;
 
-    List<MedicalRecord> medicalRecords = dataLoader.loadAllDataFromJson("medicalrecords",
+    List<MedicalRecord> medicalRecords = dataLoader.loadAllDataFromJson(Constants.MEDICAL_RECORDS,
         MedicalRecord.class);
     List<PersonWithAge> listPeopleServicedWithAge = addAgeToPersons(listPeopleServiced,
         medicalRecords);

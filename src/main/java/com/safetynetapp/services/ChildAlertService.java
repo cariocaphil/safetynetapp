@@ -6,6 +6,7 @@ import com.safetynetapp.models.PersonWithAge;
 import com.safetynetapp.models.MedicalRecord;
 import com.safetynetapp.models.SimpleChildInfo;
 
+import com.safetynetapp.utilities.Constants;
 import com.safetynetapp.utilities.DataLoader;
 import com.safetynetapp.utilities.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,10 +29,10 @@ public class ChildAlertService {
   public ChildInfoResponse getChildAlertInfo(String address) {
     Logger.debug("Received request for ChildAlertInfo with address: {}", address);
 
-    List<Person> persons = dataLoader.loadAllDataFromJson("persons", Person.class);
+    List<Person> persons = dataLoader.loadAllDataFromJson(Constants.PERSONS, Person.class);
     List<PersonWithAge> children = new ArrayList<>();
     List<Person> otherPersons = new ArrayList<>();
-    List<MedicalRecord> medicalRecords = dataLoader.loadAllDataFromJson("medicalrecords", MedicalRecord.class);
+    List<MedicalRecord> medicalRecords = dataLoader.loadAllDataFromJson(Constants.MEDICAL_RECORDS, MedicalRecord.class);
 
     for (Person person : persons) {
       for (MedicalRecord record : medicalRecords) {
