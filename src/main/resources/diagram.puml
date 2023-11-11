@@ -1,0 +1,123 @@
+@startuml
+class ChildInfoResponse {
+  - children: List<SimpleChildInfo>
+  - otherPersons: List<Person>
+}
+
+class FireStation {
+  - address: String
+  - station: String
+}
+
+class FireStationInfoResponse {
+  - peopleServiced: List<PersonInfo>
+  - summaryChildrenAndAdultsServiced: SummaryChildrenAndAdultsServiced
+}
+
+class FireInfoResponse {
+  - stationNumber: Integer
+  - peopleLivingAtAddress: List<PersonWithAgeAndMedicalDetails>
+}
+
+class FireStationMappingDeleteRequest {
+  - address: String
+}
+
+class FireStationMappingUpdateRequest {
+  - address: String
+  - station: String
+}
+
+class FloodInfoResponse {
+  - listHouseholdsAtStation: Map<String, List<PersonWithAgeAndMedicalDetails>>
+}
+
+class MedicalRecord {
+  - firstName: String
+  - lastName: String
+  - birthdate: String
+  - medications: List<String>
+  - allergies: List<String>
+}
+
+class Person {
+  - firstName: String
+  - lastName: String
+  - address: String
+  - city: String
+  - zip: String
+  - phone: String
+  - email: String
+}
+
+class PersonDetails {
+  - firstName: String
+  - lastName: String
+  - address: String
+  - age: int
+  - email: String
+  - medications: List<String>
+  - allergies: List<String>
+}
+
+class PersonInfo {
+  - firstName: String
+  - lastName: String
+  - address: String
+  - phone: String
+}
+
+class PersonWithAge {
+  - age: int
+}
+
+class PersonWithAgeAndMedicalDetails {
+  - firstName: String
+  - lastName: String
+  - phone: String
+  - age: int
+  - medications: List<String>
+  - allergies: List<String>
+}
+
+class PhoneAlertInfoResponse {
+  - phoneNumbers: List<String>
+}
+
+class SimpleChildInfo {
+  - firstName: String
+  - lastName: String
+  - age: int
+}
+
+class SummaryChildrenAndAdultsServiced {
+  - children: int
+  - adults: int
+}
+
+' Use Cases
+note left of FireStationInfoResponse : Getting a list of people serviced by station
+note left of ChildInfoResponse : Getting a list of children at an address
+note left of PhoneAlertInfoResponse : Getting a list of phone numbers serviced by a fire station
+note left of FireInfoResponse : Getting the fire station number for an address
+note left of FloodInfoResponse : Getting a set of households serviced by a set of fire stations
+note left of Person : Getting a list of people given a first and last name
+note left of Person : Getting a list of emails for a city
+
+ChildInfoResponse --> Person : otherPersons
+FireStationInfoResponse --> PersonInfo : peopleServiced
+FireStationInfoResponse --> SummaryChildrenAndAdultsServiced : summaryChildrenAndAdultsServiced
+FireInfoResponse --> PersonWithAgeAndMedicalDetails : peopleLivingAtAddress
+FireInfoResponse --> FireStation : has
+FireStationMappingDeleteRequest --> FireStation : (composition)
+FireStationMappingUpdateRequest --> FireStation : (composition)
+FloodInfoResponse --> PersonWithAgeAndMedicalDetails : listHouseholdsAtStation
+MedicalRecord --> Person : (composition)
+PersonDetails --> Person : (composition)
+PersonWithAgeAndMedicalDetails --> PersonWithAge : (composition)
+PersonInfo -- Person : extends
+PersonWithAgeAndMedicalDetails -- PersonWithAge : extends
+PersonWithAgeAndMedicalDetails -- PersonDetails : contains
+PersonWithAge -- Person : contains
+ChildInfoResponse --> SimpleChildInfo : contains
+@enduml
