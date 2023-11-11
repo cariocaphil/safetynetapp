@@ -1,7 +1,6 @@
 package com.safetynetapp.services;
 
-import com.safetynetapp.models.FireStationInfoResponse;
-import com.safetynetapp.models.FireStationInfoResponse.FireInfoResponse;
+import com.safetynetapp.models.FireInfoResponse;
 import com.safetynetapp.models.MedicalRecord;
 import com.safetynetapp.models.Person;
 import com.safetynetapp.models.PersonWithAgeAndMedicalDetails;
@@ -38,7 +37,7 @@ public class FireService {
     List<PersonWithAgeAndMedicalDetails> customizedPeopleLivingAtAddress =
         customizeListPeopleServicedWithMedicalDetails(peopleLivingAtAddress);
 
-    FireStationInfoResponse.FireInfoResponse response = new FireStationInfoResponse.FireInfoResponse();
+    FireInfoResponse response = new FireInfoResponse();
     response.setStationNumber(stationServicingAddress);
     response.setPeopleLivingAtAddress(customizedPeopleLivingAtAddress);
 

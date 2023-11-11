@@ -1,7 +1,7 @@
 package com.safetynetapp.services;
 
 import com.safetynetapp.models.*;
-import com.safetynetapp.models.FireStationInfoResponse.FireInfoResponse;
+import com.safetynetapp.models.FireInfoResponse;
 import com.safetynetapp.utilities.DataLoader;
 import com.safetynetapp.utilities.DataUtils;
 import com.safetynetapp.utilities.DateUtils;
