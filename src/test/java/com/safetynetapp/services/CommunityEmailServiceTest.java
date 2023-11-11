@@ -2,6 +2,7 @@ package com.safetynetapp.services;
 
 import com.safetynetapp.models.Person;
 import com.safetynetapp.services.CommunityEmailService;
+import com.safetynetapp.utilities.Constants;
 import com.safetynetapp.utilities.DataLoader;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -40,7 +41,7 @@ class CommunityEmailServiceTest {
         new Person("James", "Smith", "Address3", "OtherCity", "67890", "555-555-5555", null)
     );
 
-    when(dataLoader.loadAllDataFromJson("persons", Person.class)).thenReturn(mockPeople);
+    when(dataLoader.loadAllDataFromJson(Constants.PERSONS, Person.class)).thenReturn(mockPeople);
 
     // Act
     List<String> result = communityEmailService.getCommunityEmails(city);
@@ -65,7 +66,7 @@ class CommunityEmailServiceTest {
         new Person("James", "Smith", "Address3", city, "67890", "555-555-5555", null)
     );
 
-    when(dataLoader.loadAllDataFromJson("persons", Person.class)).thenReturn(mockPeople);
+    when(dataLoader.loadAllDataFromJson(Constants.PERSONS, Person.class)).thenReturn(mockPeople);
 
     // Act
     List<String> result = communityEmailService.getCommunityEmails(city);

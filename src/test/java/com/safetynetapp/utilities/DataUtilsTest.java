@@ -42,8 +42,8 @@ public class DataUtilsTest {
     );
 
     // Mock data loader behavior
-    when(dataLoader.loadAllDataFromJson("persons", Person.class)).thenReturn(allPeople);
-    when(dataLoader.loadAllDataFromJson("firestations", FireStation.class)).thenReturn(fireStations);
+    when(dataLoader.loadAllDataFromJson(Constants.PERSONS, Person.class)).thenReturn(allPeople);
+    when(dataLoader.loadAllDataFromJson(Constants.FIRESTATIONS, FireStation.class)).thenReturn(fireStations);
 
     // Test with station number "1"
     List<Person> result = dataUtils.getPeopleServicedByFireStation("1");

@@ -1,6 +1,7 @@
 package com.safetynetapp.services;
 
 import com.safetynetapp.models.MedicalRecord;
+import com.safetynetapp.utilities.Constants;
 import com.safetynetapp.utilities.DataLoader;
 import com.safetynetapp.utilities.DataUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -43,7 +44,7 @@ class MedicalRecordServiceTest {
     mockRecord.setBirthdate("01/01/1980");
 
     List<MedicalRecord> mockMedicalRecords = new ArrayList<>();
-    when(dataLoader.loadAllDataFromJson("medicalrecords", MedicalRecord.class)).thenReturn(mockMedicalRecords);
+    when(dataLoader.loadAllDataFromJson(Constants.MEDICAL_RECORDS, MedicalRecord.class)).thenReturn(mockMedicalRecords);
 
     // Act
     boolean added = medicalRecordService.addMedicalRecord(mockRecord);
@@ -64,7 +65,7 @@ class MedicalRecordServiceTest {
 
     List<MedicalRecord> mockMedicalRecords = new ArrayList<>();
     mockMedicalRecords.add(mockRecord);
-    when(dataLoader.loadAllDataFromJson("medicalrecords", MedicalRecord.class)).thenReturn(mockMedicalRecords);
+    when(dataLoader.loadAllDataFromJson(Constants.MEDICAL_RECORDS, MedicalRecord.class)).thenReturn(mockMedicalRecords);
 
     // Act
     boolean added = medicalRecordService.addMedicalRecord(mockRecord);
@@ -91,7 +92,7 @@ class MedicalRecordServiceTest {
 
     List<MedicalRecord> mockMedicalRecords = new ArrayList<>();
     mockMedicalRecords.add(existingRecord);
-    when(dataLoader.loadAllDataFromJson("medicalrecords", MedicalRecord.class)).thenReturn(mockMedicalRecords);
+    when(dataLoader.loadAllDataFromJson(Constants.MEDICAL_RECORDS, MedicalRecord.class)).thenReturn(mockMedicalRecords);
 
     // Act
     boolean updated = medicalRecordService.updateMedicalRecord(updatedRecord);
@@ -111,7 +112,7 @@ class MedicalRecordServiceTest {
     updatedRecord.setBirthdate("01/01/1980");
 
     List<MedicalRecord> mockMedicalRecords = new ArrayList<>();
-    when(dataLoader.loadAllDataFromJson("medicalrecords", MedicalRecord.class)).thenReturn(mockMedicalRecords);
+    when(dataLoader.loadAllDataFromJson(Constants.MEDICAL_RECORDS, MedicalRecord.class)).thenReturn(mockMedicalRecords);
 
     // Act
     boolean updated = medicalRecordService.updateMedicalRecord(updatedRecord);
@@ -130,7 +131,7 @@ class MedicalRecordServiceTest {
 
     List<MedicalRecord> mockMedicalRecords = new ArrayList<>();
     mockMedicalRecords.add(mockRecord);
-    when(dataLoader.loadAllDataFromJson("medicalrecords", MedicalRecord.class)).thenReturn(mockMedicalRecords);
+    when(dataLoader.loadAllDataFromJson(Constants.MEDICAL_RECORDS, MedicalRecord.class)).thenReturn(mockMedicalRecords);
 
     // Act
     boolean deleted = medicalRecordService.deleteMedicalRecord("John", "Doe");
@@ -144,7 +145,7 @@ class MedicalRecordServiceTest {
   void testDeleteMedicalRecordNotFound() {
     // Arrange
     List<MedicalRecord> mockMedicalRecords = new ArrayList<>();
-    when(dataLoader.loadAllDataFromJson("medicalrecords", MedicalRecord.class)).thenReturn(mockMedicalRecords);
+    when(dataLoader.loadAllDataFromJson(Constants.MEDICAL_RECORDS, MedicalRecord.class)).thenReturn(mockMedicalRecords);
 
     // Act
     boolean deleted = medicalRecordService.deleteMedicalRecord("John", "Doe");

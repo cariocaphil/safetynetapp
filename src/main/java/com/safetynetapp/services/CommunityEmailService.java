@@ -1,6 +1,7 @@
 package com.safetynetapp.services;
 
 import com.safetynetapp.models.Person;
+import com.safetynetapp.utilities.Constants;
 import com.safetynetapp.utilities.DataLoader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,7 @@ public class CommunityEmailService {
   public List<String> getCommunityEmails(String city) {
     Logger.debug("Received request for CommunityEmails with city: {}", city);
 
-    List<Person> allPeople = dataLoader.loadAllDataFromJson("persons", Person.class);
+    List<Person> allPeople = dataLoader.loadAllDataFromJson(Constants.PERSONS, Person.class);
     List<String> communityEmails = new ArrayList<>();
 
     for (Person person : allPeople) {

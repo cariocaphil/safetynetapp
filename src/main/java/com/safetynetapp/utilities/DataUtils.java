@@ -7,6 +7,7 @@ import com.safetynetapp.models.PersonDetails;
 import com.safetynetapp.models.PersonWithAgeAndMedicalDetails;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,7 +24,7 @@ public class DataUtils {
   }
 
   public List<Person> getPeopleServicedByFireStation(String stationNumber) {
-    List<Person> allPeople = loadJsonData("persons", Person.class);
+    List<Person> allPeople = loadJsonData(Constants.PERSONS, Person.class);
     List<Person> peopleServicedByStation = new ArrayList<>();
 
     for (Person person : allPeople) {
@@ -36,7 +37,7 @@ public class DataUtils {
   }
 
   private List<String> getAddressesForStation(String stationNumber) {
-    List<FireStation> fireStations = loadJsonData("firestations", FireStation.class);
+    List<FireStation> fireStations = loadJsonData(Constants.FIRESTATIONS, FireStation.class);
     List<String> addresses = new ArrayList<>();
 
     for (FireStation fireStation : fireStations) {
@@ -49,7 +50,7 @@ public class DataUtils {
   }
 
   public Integer getStationForAddress(String address) {
-    List<FireStation> fireStations = loadJsonData("firestations", FireStation.class);
+    List<FireStation> fireStations = loadJsonData(Constants.FIRESTATIONS, FireStation.class);
     Integer stationNumber = null;
 
     for (FireStation fireStation : fireStations) {
@@ -63,7 +64,7 @@ public class DataUtils {
   }
 
   public List<Person> getPeopleLivingAtAddress(String address) {
-    List<Person> allPeople = dataLoader.loadAllDataFromJson("persons", Person.class);
+    List<Person> allPeople = dataLoader.loadAllDataFromJson(Constants.PERSONS, Person.class);
     List<Person> peopleLivingAtAddress = new ArrayList<>();
 
     for (Person person : allPeople) {
@@ -76,41 +77,37 @@ public class DataUtils {
   }
 
   public PersonWithAgeAndMedicalDetails getPersonDetails(Person person) {
-    List<MedicalRecord> medicalRecords = loadJsonData("medicalrecords",
-        MedicalRecord.class);
-    for (MedicalRecord record : medicalRecords) {
-      if (person.getFirstName().equals(record.getFirstName()) && person.getLastName()
-          .equals(record.getLastName())) {
-        int age = DateUtils.calculateAge(record.getBirthdate());
+    List<MedicalRecord> medicalRecords = loadJsonData("medicalrecords", MedicalRecord.class);
 
-        return new PersonWithAgeAndMedicalDetails(
-            person.getFirstName(), person.getLastName(), person.getPhone(), age,
-            record.getMedications(), record.getAllergies()
-        );
-      }
-    }
+    Optional<MedicalRecord> matchingRecord = medicalRecords.stream()
+        .filter(record -> person.getFirstName().equals(record.getFirstName()) &&
+            person.getLastName().equals(record.getLastName()))
+        .findFirst();
 
-    // If no matching medical record found, return null or handle appropriately.
-    return null;
+    return matchingRecord.map(record -> {
+      int age = DateUtils.calculateAge(record.getBirthdate());
+      return new PersonWithAgeAndMedicalDetails(
+          person.getFirstName(), person.getLastName(), person.getPhone(), age,
+          record.getMedications(), record.getAllergies()
+      );
+    }).orElse(null);
   }
 
   public PersonDetails getPersonDetailsFor(Person person) {
-    List<MedicalRecord> medicalRecords = loadJsonData("medicalrecords",
-        MedicalRecord.class);
+    List<MedicalRecord> medicalRecords = loadJsonData("medicalrecords", MedicalRecord.class);
 
-    for (MedicalRecord record : medicalRecords) {
-      if (person.getFirstName().equals(record.getFirstName()) && person.getLastName()
-          .equals(record.getLastName())) {
-        int age = DateUtils.calculateAge(record.getBirthdate());
+    Optional<MedicalRecord> matchingRecord = medicalRecords.stream()
+        .filter(record -> person.getFirstName().equals(record.getFirstName()) &&
+            person.getLastName().equals(record.getLastName()))
+        .findFirst();
 
-        return new PersonDetails(
-            person.getFirstName(), person.getLastName(), person.getAddress(), age,
-            person.getEmail(),
-            record.getMedications(), record.getAllergies()
-        );
-      }
-    }
-    // If no matching medical record found, return null or handle appropriately.
-    return null;
+    return matchingRecord.map(record -> {
+      int age = DateUtils.calculateAge(record.getBirthdate());
+      return new PersonDetails(
+          person.getFirstName(), person.getLastName(), person.getAddress(), age,
+          person.getEmail(),
+          record.getMedications(), record.getAllergies()
+      );
+    }).orElse(null);
   }
 }

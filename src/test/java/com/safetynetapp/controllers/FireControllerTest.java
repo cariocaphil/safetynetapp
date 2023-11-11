@@ -1,6 +1,6 @@
 package com.safetynetapp.controllers;
 
-import com.safetynetapp.models.FireStationInfoResponse.FireInfoResponse;
+import com.safetynetapp.models.FireInfoResponse;
 import com.safetynetapp.models.PersonWithAgeAndMedicalDetails;
 import com.safetynetapp.services.FireService;
 import java.util.Arrays;

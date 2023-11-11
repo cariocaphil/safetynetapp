@@ -1,16 +1,15 @@
 package com.safetynetapp.services;
 
 import com.safetynetapp.models.*;
-import com.safetynetapp.models.FireStationInfoResponse.FireInfoResponse;
+import com.safetynetapp.utilities.Constants;
 import com.safetynetapp.utilities.DataLoader;
 import com.safetynetapp.utilities.DataUtils;
 import com.safetynetapp.utilities.DateUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +17,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 class FireServiceTest {
 
@@ -28,14 +27,12 @@ class FireServiceTest {
   @Mock
   private DataUtils dataUtils;
 
+  @InjectMocks
   private FireService fireService;
 
   @BeforeEach
   void setUp() {
     MockitoAnnotations.openMocks(this);
-    fireService = new FireService();
-    fireService.setDataLoader(dataLoader);
-    fireService.setDataUtils(dataUtils);
   }
 
   @Test
@@ -53,10 +50,7 @@ class FireServiceTest {
     // Mock dataLoader behavior
     List<MedicalRecord> medicalRecords = new ArrayList<>();
     medicalRecords.add(new MedicalRecord("John", "Doe", "01/01/2005", new ArrayList<>(), new ArrayList<>()));
-
-
-
-    when(dataLoader.loadAllDataFromJson("medicalrecords", MedicalRecord.class)).thenReturn(medicalRecords);
+    when(dataLoader.loadAllDataFromJson(Constants.MEDICAL_RECORDS, MedicalRecord.class)).thenReturn(medicalRecords);
 
     // Act
     FireInfoResponse fireInfoResponse = fireService.getFireInfo(address);

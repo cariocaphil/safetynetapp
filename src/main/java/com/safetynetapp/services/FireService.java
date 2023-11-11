@@ -1,7 +1,6 @@
 package com.safetynetapp.services;
 
-import com.safetynetapp.models.FireStationInfoResponse;
-import com.safetynetapp.models.FireStationInfoResponse.FireInfoResponse;
+import com.safetynetapp.models.FireInfoResponse;
 import com.safetynetapp.models.MedicalRecord;
 import com.safetynetapp.models.Person;
 import com.safetynetapp.models.PersonWithAgeAndMedicalDetails;
@@ -18,11 +17,14 @@ import java.util.List;
 @Service
 public class FireService {
 
-  @Autowired
-  private DataLoader dataLoader;
+  private final DataLoader dataLoader;
+  private final DataUtils dataUtils;
 
   @Autowired
-  private DataUtils dataUtils;
+  public FireService(DataLoader dataLoader, DataUtils dataUtils) {
+    this.dataLoader = dataLoader;
+    this.dataUtils = dataUtils;
+  }
 
   public FireInfoResponse getFireInfo(String address) {
     Logger.debug("Received request for FireInfo with address: {}", address);
@@ -38,7 +40,7 @@ public class FireService {
     List<PersonWithAgeAndMedicalDetails> customizedPeopleLivingAtAddress =
         customizeListPeopleServicedWithMedicalDetails(peopleLivingAtAddress);
 
-    FireStationInfoResponse.FireInfoResponse response = new FireStationInfoResponse.FireInfoResponse();
+    FireInfoResponse response = new FireInfoResponse();
     response.setStationNumber(stationServicingAddress);
     response.setPeopleLivingAtAddress(customizedPeopleLivingAtAddress);
 
@@ -48,9 +50,9 @@ public class FireService {
   }
 
   public List<PersonWithAgeAndMedicalDetails> customizeListPeopleServicedWithMedicalDetails(List<Person> listPeopleServiced) {
+    List<PersonWithAgeAndMedicalDetails> personWithMedicalDetailsList = new ArrayList<>();
     List<MedicalRecord> medicalRecords = dataLoader.loadAllDataFromJson("medicalrecords", MedicalRecord.class);
 
-    List<PersonWithAgeAndMedicalDetails> personWithMedicalDetailsList = new ArrayList<>();
     for (Person person : listPeopleServiced) {
       for (MedicalRecord record : medicalRecords) {
         if (person.getFirstName().equals(record.getFirstName()) && person.getLastName().equals(record.getLastName())) {
@@ -69,13 +71,5 @@ public class FireService {
 
     Logger.debug("Customized People List with Medical Details generated");
     return personWithMedicalDetailsList;
-  }
-
-  public void setDataLoader(DataLoader dataLoader) {
-    this.dataLoader = dataLoader;
-  }
-
-  public void setDataUtils(DataUtils dataUtils) {
-    this.dataUtils = dataUtils;
   }
 }
