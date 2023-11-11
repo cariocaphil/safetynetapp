@@ -4,6 +4,7 @@ import com.safetynetapp.models.FireInfoResponse;
 import com.safetynetapp.models.MedicalRecord;
 import com.safetynetapp.models.Person;
 import com.safetynetapp.models.PersonWithAgeAndMedicalDetails;
+import com.safetynetapp.services.interfaces.FireInfoService;
 import com.safetynetapp.utilities.DataLoader;
 import com.safetynetapp.utilities.DataUtils;
 import com.safetynetapp.utilities.DateUtils;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class FireService {
+public class FireService implements FireInfoService {
 
   private final DataLoader dataLoader;
   private final DataUtils dataUtils;
@@ -26,6 +27,7 @@ public class FireService {
     this.dataUtils = dataUtils;
   }
 
+  @Override
   public FireInfoResponse getFireInfo(String address) {
     Logger.debug("Received request for FireInfo with address: {}", address);
 
