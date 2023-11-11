@@ -1,0 +1,467 @@
+{
+	"info": {
+		"_postman_id": "9f6dd285-4b67-4962-b38b-edfe19cc56d7",
+		"name": "safetynet collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "fire endpoint",
+			"item": [
+				{
+					"name": "947 E. Rose Dr",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/fireStationt?address=951 LoneTree Rd",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fireStationt"
+							],
+							"query": [
+								{
+									"key": "address",
+									"value": "951 LoneTree Rd"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "908 73rd St",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/fireStationt?address=908 73rd St",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fireStationt"
+							],
+							"query": [
+								{
+									"key": "address",
+									"value": "908 73rd St"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "phoneAlert endpoint",
+			"item": [
+				{
+					"name": "http://localhost:8080/phoneAlert?firestation=4",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/phoneAlert?firestation=4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"phoneAlert"
+							],
+							"query": [
+								{
+									"key": "firestation",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "childAlert endpoint",
+			"item": [
+				{
+					"name": "http://localhost:8080/childAlert?address=748%20Townings%20Dr",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "flood endpoint",
+			"item": [
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "firestation endpoint",
+			"item": [
+				{
+					"name": "http://localhost:8080/firestation?stationNumber=2",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PersonInfo endpoint",
+			"item": [
+				{
+					"name": "http://localhost:8080/personInfo?firstName=<firstName>&lastName=<lastName>",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8080/personInfo?firstName=<firstName>&lastName=<lastName> Copy",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "communityEmail endpoint",
+			"item": [
+				{
+					"name": "http://localhost:8080/communityEmail?city=Culver",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CRUD Endpoints",
+			"item": [
+				{
+					"name": "MedicalRecord endpoint",
+					"item": [
+						{
+							"name": "Add Medical Record",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"birthdate\": \"1990-05-15\",\n  \"medications\": [\"Medication A\", \"Medication B\"],\n  \"allergies\": [\"Peanuts\", \"Dust\"]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/medicalRecord",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"medicalRecord"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Medical Record",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"birthdate\": \"1990-05-15\",\n  \"medications\": [\"Medication A\", \"Medication B\"],\n  \"allergies\": [\"Peanuts\", \"Dust\"]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/medicalRecord?firstName=John&lastName=Doe",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"medicalRecord"
+									],
+									"query": [
+										{
+											"key": "firstName",
+											"value": "John"
+										},
+										{
+											"key": "lastName",
+											"value": "Doe"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Put Medical Record",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"firstName\": \"Jamie\",\n  \"lastName\": \"Peters\",\n  \"birthdate\": \"1980-01-15\",\n  \"medications\": [\"Med1\", \"Med2\"],\n  \"allergies\": [\"Allergy1\", \"Allergy2\"]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/medicalRecord",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"medicalRecord"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Person endoint",
+					"item": [
+						{
+							"name": "DELETE",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/person?firstName=John&lastName=Doe",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"person"
+									],
+									"query": [
+										{
+											"key": "firstName",
+											"value": "John"
+										},
+										{
+											"key": "lastName",
+											"value": "Doe"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PUT",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"firstName\": \"Eric\",\n    \"lastName\": \"Cadigan\",\n    \"address\": \"951 LoneTree Rd\",\n    \"city\": \"Offenbach\",\n    \"zip\": \"97451\",\n    \"phone\": \"841-874-7458\",\n    \"email\": \"gramps@email.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/person",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"person"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "ADD",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"address\": \"123 Main St\",\n  \"city\": \"Springfield\",\n  \"zip\": \"12345\",\n  \"phone\": \"555-123-4567\",\n  \"email\": \"john.doe@email.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/person",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"person"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "firestation endpoint crud",
+					"item": [
+						{
+							"name": "http://localhost:8080/firestation?stationNumber=2",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "Add Firestation",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"address\": \"123 Main St\",\n  \"station\": \"2\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/firestation",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"firestation"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Firestation",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"address\": \"123 Main St\",\n  \"station\": \"3\"\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/firestation",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"firestation"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Firestation",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"address\": \"1509 Culver St\"\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/firestation",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"firestation"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
